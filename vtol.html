@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MILKRUN VTOL</title>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.184.0/build/three.module.js",
+    "three/addons/controls/OrbitControls.js": "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js",
+    "three/addons/exporters/OBJExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js",
+    "three/addons/exporters/GLTFExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js"
+  },
+  "integrity": {
+    "https://unpkg.com/three@0.184.0/build/three.module.js": "sha384-8FCZ1eVO6it4+pbec2aDtnTrwjWXZLJRC+MAGCIPDgsYnUrl/E0A2YlF8ioMKI/J",
+    "https://unpkg.com/three@0.184.0/build/three.core.js": "sha384-dw2ooPewaEIrAgl6oFDBmmBWCE9oW9LxRGcfwZ0hLvEprzo202wXl7vCYHRlSnOT",
+    "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js": "sha384-4rziNxOBZKQ69i+w+f89KJ55TCYquwchVbByQwmaOeIOXdOU2PLDn3kOfXHwIJC9",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js": "sha384-nbwtoZENJD3Vq+ACK0CuGQdPMuDWHkamC2KJD70EV5nfg6jQjfppKOea07YJN+N3",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js": "sha384-VofkvpG6HERhFCYbsUOHeNXBCqID2nfqkQqnVzE1jc/oPcz+qJ13ADdXH08hE+cQ"
+  }
+}
+</script>
+<style>
+  html, body { margin:0; height:100%; background:#14150F; overflow:hidden; }
+  three-d-stage:not(:defined) { visibility:hidden; }
+  three-d-stage { display:block; width:100vw; height:100vh; }
+</style>
+</head>
+<body>
+<three-d-stage name="milkrun-vtol" background="#14150F" autorotate></three-d-stage>
+<script src="three-d-stage.js"></script>
+<script type="module">
+  const stage = document.querySelector('three-d-stage');
+  const { THREE } = await stage.ready;
+
+  /* ---------- environment: procedural equirect sky for real specular ---------- */
+  const envCanvas = document.createElement('canvas');
+  envCanvas.width = 1024; envCanvas.height = 512;
+  {
+    const c = envCanvas.getContext('2d');
+    const g = c.createLinearGradient(0, 0, 0, 512);
+    g.addColorStop(0.00, '#cfd9de');
+    g.addColorStop(0.42, '#8e9aa2');
+    g.addColorStop(0.52, '#4a4f52');
+    g.addColorStop(1.00, '#191b18');
+    c.fillStyle = g; c.fillRect(0, 0, 1024, 512);
+    const sun = c.createRadialGradient(300, 120, 0, 300, 120, 220);
+    sun.addColorStop(0, 'rgba(255,246,232,1)');
+    sun.addColorStop(1, 'rgba(255,246,232,0)');
+    c.fillStyle = sun; c.fillRect(0, 0, 1024, 512);
+    const warm = c.createRadialGradient(820, 260, 0, 820, 260, 300);
+    warm.addColorStop(0, 'rgba(226,87,30,0.35)');
+    warm.addColorStop(1, 'rgba(226,87,30,0)');
+    c.fillStyle = warm; c.fillRect(0, 0, 1024, 512);
+  }
+  const envTex = new THREE.CanvasTexture(envCanvas);
+  envTex.mapping = THREE.EquirectangularReflectionMapping;
+  envTex.colorSpace = THREE.SRGBColorSpace;
+  const pmrem = new THREE.PMREMGenerator(stage._renderer);
+  stage._scene.environment = pmrem.fromEquirectangular(envTex).texture;
+  stage._renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  stage._renderer.toneMappingExposure = 1.05;
+
+  /* ---------- materials ---------- */
+  const M = {
+    shell: new THREE.MeshPhysicalMaterial({
+      name: 'shell', color: '#EFEDE7', roughness: 0.28, metalness: 0.05,
+      clearcoat: 0.85, clearcoatRoughness: 0.14
+    }),
+    accent: new THREE.MeshPhysicalMaterial({
+      name: 'accent', color: '#D9500F', roughness: 0.3, metalness: 0.05, clearcoat: 0.7
+    }),
+    carbon: new THREE.MeshPhysicalMaterial({
+      name: 'carbon', color: '#191B18', roughness: 0.34, metalness: 0.35, clearcoat: 0.55
+    }),
+    alloy: new THREE.MeshStandardMaterial({ name: 'alloy', color: '#9AA0A2', roughness: 0.28, metalness: 0.85 }),
+    glassX: new THREE.MeshPhysicalMaterial({
+      name: 'glass', color: '#0E1416', roughness: 0.06, metalness: 0.2, clearcoat: 1, transmission: 0.05
+    }),
+    pod: new THREE.MeshPhysicalMaterial({ name: 'pod', color: '#F5F3EE', roughness: 0.62, metalness: 0.0, clearcoat: 0.25 }),
+    seal: new THREE.MeshStandardMaterial({ name: 'seal', color: '#2A2D27', roughness: 0.85, metalness: 0.0 }),
+    lightRed: new THREE.MeshStandardMaterial({ name: 'nav_red', color: '#FF3B1F', emissive: '#FF2A0A', emissiveIntensity: 1.6, roughness: 0.3 }),
+    lightGreen: new THREE.MeshStandardMaterial({ name: 'nav_green', color: '#39E27A', emissive: '#12C25A', emissiveIntensity: 1.6, roughness: 0.3 })
+  };
+
+  M.glass = M.glassX;
+  [M.shell, M.accent, M.carbon].forEach((m) => { m.side = THREE.DoubleSide; });
+
+  const model = new THREE.Group();
+  model.name = 'milkrun_mr1';
+  const add = (geo, mat, name, parent) => {
+    const m = new THREE.Mesh(geo, mat);
+    m.name = name; m.castShadow = true; m.receiveShadow = true;
+    (parent || model).add(m);
+    return m;
+  };
+
+  /* ---------- airfoil helpers ---------- */
+  const naca = (chord, thick, n = 26) => {
+    const up = [], lo = [];
+    for (let i = 0; i <= n; i++) {
+      const x = i / n;
+      const yt = 5 * thick * (0.2969 * Math.sqrt(x) - 0.126 * x - 0.3516 * x * x + 0.2843 * x ** 3 - 0.1015 * x ** 4);
+      up.push([x * chord, yt * chord]);
+      lo.push([x * chord, -yt * chord]);
+    }
+    const s = new THREE.Shape();
+    s.moveTo(up[0][0], up[0][1]);
+    up.forEach((p) => s.lineTo(p[0], p[1]));
+    lo.reverse().forEach((p) => s.lineTo(p[0], p[1]));
+    s.closePath();
+    return s;
+  };
+
+  // extrude an airfoil along +Z, then taper / sweep / twist / dihedral per span
+  const foil = (opts) => {
+    const { chord, thick, span, taper = 1, sweep = 0, twist = 0, dihedral = 0 } = opts;
+    const geo = new THREE.ExtrudeGeometry(naca(chord, thick), { depth: span, bevelEnabled: false, curveSegments: 24, steps: 12 });
+    geo.translate(-chord * 0.3, 0, 0);
+    const pos = geo.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+      const f = z / span;                       // 0 root → 1 tip
+      const s = 1 - (1 - taper) * f;            // chord scale
+      const a = twist * f;
+      const nx = x * s, ny = y * s;
+      pos.setX(i, nx * Math.cos(a) - ny * Math.sin(a) + sweep * f);
+      pos.setY(i, nx * Math.sin(a) + ny * Math.cos(a) + dihedral * f);
+    }
+    geo.computeVertexNormals();
+    return geo;
+  };
+
+  /* ---------- fuselage: lathe profile, streamlined ---------- */
+  {
+    const prof = [];
+    const L = 1.9;
+    for (let i = 0; i <= 40; i++) {
+      const t = i / 40;
+      const x = t * L;
+      // ogive nose → constant mid → tapered boat-tail
+      let r;
+      if (t < 0.26) r = 0.20 * Math.sin((t / 0.26) * Math.PI * 0.5) ** 0.72;
+      else if (t < 0.62) r = 0.20;
+      else r = 0.20 * (1 - Math.pow((t - 0.62) / 0.38, 1.7)) + 0.028;
+      prof.push(new THREE.Vector2(Math.max(0.004, r), x));
+    }
+    const geo = new THREE.LatheGeometry(prof, 64);
+    geo.rotateZ(Math.PI / 2);
+    geo.translate(0.92, 0, 0);         // nose forward (+x)
+    geo.scale(1, 0.92, 1);             // slight flattening
+    add(geo, M.shell, 'fuselage');
+  }
+
+  // canopy / avionics blister
+  {
+    const g = new THREE.SphereGeometry(0.155, 40, 24, 0, Math.PI * 2, 0, Math.PI * 0.55);
+    g.scale(1.9, 0.62, 1.0);
+    const m = add(g, M.glass, 'avionics_canopy');
+    m.position.set(0.52, 0.11, 0);
+  }
+  // chin sensor turret
+  {
+    const g = new THREE.SphereGeometry(0.085, 32, 24);
+    const m = add(g, M.carbon, 'sensor_turret'); m.position.set(0.7, -0.13, 0);
+    const l = add(new THREE.CylinderGeometry(0.045, 0.05, 0.03, 24), M.glass, 'sensor_lens');
+    l.position.set(0.735, -0.19, 0); l.rotation.z = -0.5;
+  }
+  // pitot boom
+  {
+    const m = add(new THREE.CylinderGeometry(0.008, 0.005, 0.24, 12), M.alloy, 'pitot');
+    m.position.set(1.06, 0.0, 0); m.rotation.z = Math.PI / 2;
+  }
+  // dorsal antenna
+  {
+    const m = add(foil({ chord: 0.16, thick: 0.14, span: 0.14, taper: 0.45 }), M.carbon, 'antenna_blade');
+    m.rotation.x = -Math.PI / 2; m.position.set(-0.2, 0.17, 0);
+  }
+  // livery band
+  {
+    const g = new THREE.CylinderGeometry(0.201, 0.201, 0.1, 64, 1, true);
+    g.rotateZ(Math.PI / 2);
+    const m = add(g, M.accent, 'livery_band'); m.position.set(0.14, 0, 0);
+  }
+
+  /* ---------- main wing (one piece, port + starboard) ---------- */
+  [1, -1].forEach((side) => {
+    const g = foil({ chord: 0.38, thick: 0.12, span: 1.52, taper: 0.5, sweep: -0.1, twist: -0.045, dihedral: 0.07 });
+    const m = add(g, M.shell, 'wing_' + (side > 0 ? 'stbd' : 'port'));
+    m.scale.z = side;
+    m.position.set(-0.12, 0.15, side * 0.16);
+  });
+  // wing root fairings
+  [0.24, -0.24].forEach((z, i) => {
+    const g = new THREE.SphereGeometry(0.12, 28, 20);
+    g.scale(2.2, 0.5, 1.1);
+    const m = add(g, M.shell, 'wing_fairing_' + i); m.position.set(-0.08, 0.13, z);
+  });
+  // winglets
+  [1, -1].forEach((side, i) => {
+    const g = foil({ chord: 0.15, thick: 0.1, span: 0.24, taper: 0.45, sweep: -0.09, twist: 0 });
+    const m = add(g, M.accent, 'winglet_' + i);
+    m.rotation.x = -Math.PI / 2;
+    m.position.set(-0.24, 0.24, side * 1.66);
+  });
+
+  /* ---------- tail booms + V-tail ---------- */
+  [1, -1].forEach((side, i) => {
+    const b = add(new THREE.CapsuleGeometry(0.04, 1.62, 10, 24), M.carbon, 'tailboom_' + i);
+    b.rotation.z = Math.PI / 2; b.position.set(-0.34, 0.06, side * 0.6);
+
+    const f = add(foil({ chord: 0.26, thick: 0.1, span: 0.38, taper: 0.5, sweep: -0.14 }), M.shell, 'vtail_' + i);
+    f.rotation.x = -Math.PI / 2 + side * 0.6;
+    f.position.set(-1.28, 0.08, side * 0.6);
+  });
+
+  /* ---------- tilt-rotor assemblies ---------- */
+  const rotor = (x, z, i, tilt) => {
+    const g = new THREE.Group(); g.name = 'rotor_assembly_' + i;
+    g.position.set(x, 0.06, z);
+    model.add(g);
+
+    const pylon = add(new THREE.CylinderGeometry(0.07, 0.085, 0.2, 28), M.carbon, 'pylon_' + i, g);
+    pylon.position.y = 0.05;
+    const ring = add(new THREE.TorusGeometry(0.072, 0.018, 16, 32), M.alloy, 'tilt_ring_' + i, g);
+    ring.position.y = 0.15; ring.rotation.x = Math.PI / 2;
+
+    const head = new THREE.Group(); head.name = 'rotor_head_' + i;
+    head.position.y = 0.19; head.rotation.z = tilt; g.add(head);
+
+    const nac = add(new THREE.CapsuleGeometry(0.062, 0.1, 8, 28), M.shell, 'nacelle_' + i, head);
+    nac.position.y = 0.03;
+    const hub = add(new THREE.SphereGeometry(0.045, 28, 20), M.alloy, 'rotor_hub_' + i, head);
+    hub.position.y = 0.12;
+    const spin = add(new THREE.ConeGeometry(0.04, 0.07, 28), M.accent, 'spinner_' + i, head);
+    spin.position.y = 0.17;
+
+    for (let b = 0; b < 3; b++) {
+      const geo = foil({ chord: 0.085, thick: 0.12, span: 0.52, taper: 0.42, twist: -0.34, sweep: -0.02 });
+      const blade = add(geo, M.carbon, 'blade_' + i + '_' + b, head);
+      blade.rotation.y = (b * Math.PI * 2) / 3 + i * 0.5;
+      blade.position.y = 0.115;
+    }
+  };
+  [[0.44, -0.6, 0.1], [0.44, 0.6, 0.1], [-1.06, -0.6, -0.08], [-1.06, 0.6, -0.08]]
+    .forEach((p, i) => rotor(p[0], p[1], i, p[2]));
+
+  // tail pusher propeller
+  {
+    const spin = add(new THREE.ConeGeometry(0.05, 0.12, 28), M.accent, 'pusher_spinner');
+    spin.position.set(-1.42, 0, 0); spin.rotation.z = Math.PI / 2;
+    for (let b = 0; b < 2; b++) {
+      const bl = add(foil({ chord: 0.08, thick: 0.11, span: 0.34, taper: 0.45, twist: -0.3 }), M.carbon, 'pusher_blade_' + b);
+      bl.position.set(-1.36, 0, 0);
+      bl.rotation.x = b ? Math.PI : 0;
+      bl.rotation.z = Math.PI / 2;
+    }
+  }
+
+  // nav lights on winglets
+  [[1.55, M.lightGreen, 'nav_stbd'], [-1.55, M.lightRed, 'nav_port']].forEach(([z, mat, name]) => {
+    const m = add(new THREE.SphereGeometry(0.026, 20, 14), mat, name);
+    m.position.set(-0.36, 0.38, z);
+  });
+
+  /* ---------- landing gear ---------- */
+  [1, -1].forEach((side, i) => {
+    const skid = add(new THREE.CapsuleGeometry(0.027, 1.05, 8, 20), M.carbon, 'skid_' + i);
+    skid.rotation.z = Math.PI / 2; skid.position.set(-0.14, -0.56, side * 0.38);
+    [0.24, -0.5].forEach((x, j) => {
+      const st = add(new THREE.CylinderGeometry(0.019, 0.024, 0.46, 16), M.alloy, 'strut_' + i + '_' + j);
+      st.position.set(x + 0.03, -0.33, side * 0.26);
+      st.rotation.x = -side * 0.28;
+      st.rotation.z = j ? 0.1 : -0.1;
+    });
+  });
+
+  /* ---------- medical cargo pod ---------- */
+  {
+    const pod = new THREE.Group(); pod.name = 'cargo_pod'; pod.position.set(-0.13, -0.28, 0);
+    model.add(pod);
+
+    const shape = new THREE.Shape();
+    const w = 0.33, h = 0.21, r = 0.055;
+    shape.moveTo(-w + r, -h);
+    shape.lineTo(w - r, -h); shape.quadraticCurveTo(w, -h, w, -h + r);
+    shape.lineTo(w, h - r);  shape.quadraticCurveTo(w, h, w - r, h);
+    shape.lineTo(-w + r, h); shape.quadraticCurveTo(-w, h, -w, h - r);
+    shape.lineTo(-w, -h + r); shape.quadraticCurveTo(-w, -h, -w + r, -h);
+    const body = new THREE.ExtrudeGeometry(shape, { depth: 0.46, bevelEnabled: true, bevelSize: 0.012, bevelThickness: 0.012, bevelSegments: 4, curveSegments: 16 });
+    body.translate(0, 0, -0.23);
+    add(body, M.pod, 'pod_shell', pod);
+
+    const seam = add(new THREE.BoxGeometry(0.68, 0.012, 0.475), M.seal, 'pod_seam', pod);
+    seam.position.y = -0.045;
+    [[0.26, 0.24], [-0.26, 0.24], [0.26, -0.24], [-0.26, -0.24]].forEach((p, i) => {
+      const latch = add(new THREE.BoxGeometry(0.05, 0.07, 0.022), M.alloy, 'pod_latch_' + i, pod);
+      latch.position.set(p[0], -0.045, p[1] > 0 ? 0.238 : -0.238);
+    });
+    // red cross decal
+    const cx = add(new THREE.BoxGeometry(0.19, 0.055, 0.008), M.accent, 'cross_h', pod);
+    cx.position.set(0, 0.04, 0.236);
+    const cy = add(new THREE.BoxGeometry(0.055, 0.15, 0.008), M.accent, 'cross_v', pod);
+    cy.position.set(0, 0.04, 0.236);
+    // cooling vents
+    [-0.09, 0, 0.09].forEach((y, i) => {
+      const v = add(new THREE.BoxGeometry(0.012, 0.03, 0.2), M.seal, 'vent_' + i, pod);
+      v.position.set(0.335, y * 0.7 + 0.02, 0);
+    });
+    // mounts to fuselage
+    [[0.2], [-0.2]].forEach((p, i) => {
+      const mt = add(new THREE.BoxGeometry(0.05, 0.16, 0.07), M.alloy, 'pod_mount_' + i, pod);
+      mt.position.set(p[0], 0.26, 0);
+    });
+  }
+
+  stage.setObject(model);
+</script>
+</body>
+</html>
