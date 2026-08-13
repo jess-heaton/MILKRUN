@@ -99,6 +99,8 @@
     .toolbar button:hover { background: #fff; }
     .toolbar button:active { transform: translateY(1px); }
     .toolbar button[disabled] { opacity: 0.5; pointer-events: none; }
+    /* On a phone the export buttons cover the caption and eat the drag area. */
+    @media (max-width: 700px) { .toolbar { display: none; } }
     .note {
       position: absolute;
       left: 16px;
@@ -160,6 +162,7 @@
       note.className = 'note';
       note.textContent = 'Drag to orbit · scroll to zoom · right-drag to pan';
       root.appendChild(note);
+      this._note = note;
       this._toolbar = document.createElement('div');
       this._toolbar.className = 'toolbar';
       this._objBtn = document.createElement('button');
@@ -266,6 +269,17 @@
       controls.addEventListener('start', () => {
         controls.autoRotate = false;
       });
+
+      // On touch devices OrbitControls sets touch-action:none and swallows
+      // one-finger drags, which traps the page scroll when the viewer fills the
+      // screen. Hand vertical panning back to the browser and let the model
+      // turn on its own instead.
+      this._touchOnly = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      if (this._touchOnly) {
+        controls.enabled = false;
+        renderer.domElement.style.touchAction = 'pan-y';
+        if (this._note) this._note.textContent = '';
+      }
 
       const fit = () => {
         const w = this.clientWidth || 1;

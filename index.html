@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MILKRUN — Medicine over the mountains, in minutes.</title>
-<meta name="description" content="MILKRUN flies medical supplies to remote BC communities by autonomous drone — cold-chain medicines, blood, lab samples and emergency kits from Mount Currie into the Lillooet Lake valley.">
+<meta name="description" content="A proposal to fly medical supplies to remote BC communities by autonomous drone — cold-chain medicines, blood, lab samples and emergency kits from Mount Currie into the Lillooet Lake valley.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   html, body { margin:0; padding:0; background:#F2EFE9; }
+  html { -webkit-text-size-adjust:100%; }
   * { box-sizing: border-box; }
   a { color: inherit; text-decoration: none; }
   a:hover { color: #E2571E; }
@@ -24,6 +25,74 @@
   .mr-cta-solid:hover   { background:#F2EFE9 !important; color:#14150F !important; }
   .mr-cta-ghost:hover   { border-color:#F2EFE9 !important; color:#F2EFE9 !important; }
   .mr-payload:hover     { background:#1D1E16 !important; }
+
+  /* ---- Responsive. Base layout is the 1440px design; these only narrow it.
+     Overrides need !important because the base styles are inline. ---- */
+
+  @media (max-width: 1024px) {
+    .mr-section       { padding:80px 28px !important; }
+    .mr-inner         { padding-left:28px !important; padding-right:28px !important; }
+    .mr-band          { padding:80px 0 !important; }
+    .mr-problem       { grid-template-columns:1fr !important; gap:20px !important; }
+    .mr-payload-grid  { grid-template-columns:repeat(2, 1fr) !important; }
+    .mr-network-grid  { grid-template-columns:1fr !important; gap:48px !important; }
+    .mr-specs         { grid-template-columns:1fr !important; }
+    .mr-steps         { grid-template-columns:1fr !important; gap:36px !important; }
+    .mr-brand-grid    { grid-template-columns:1fr !important; }
+    .mr-brand-marks > div { min-height:140px !important; }
+    .mr-contact-grid  { grid-template-columns:1fr !important; gap:36px !important; }
+    .mr-map           { aspect-ratio:1 / 1 !important; }
+  }
+
+  @media (max-width: 700px) {
+    /* The five-item nav cannot fit beside the wordmark on a phone, so it drops
+       to its own full-width row and the pill gives way to the footer + hero CTAs. */
+    .mr-header-inner  { padding:11px 20px 4px !important; gap:2px !important; flex-wrap:wrap !important; justify-content:center !important; }
+    .mr-nav           { width:100% !important; justify-content:space-between !important; gap:4px !important; font-size:11px !important; }
+    .mr-nav a         { padding:9px 2px !important; }
+    .mr-nav-cta       { display:none !important; }
+    .mr-logo-word     { font-size:21px !important; }
+    .mr-logo-mark     { width:21px !important; height:21px !important; border-width:5px !important; }
+    .mr-footer-inner a { padding:6px 0 !important; }
+
+    .mr-section       { padding:64px 20px !important; }
+    .mr-inner         { padding-left:20px !important; padding-right:20px !important; }
+    .mr-band          { padding:64px 0 !important; }
+
+    .mr-hero          { min-height:78vh !important; }
+    .mr-hero-body     { padding:24px 20px 36px !important; }
+    .mr-hero-actions  { gap:28px !important; }
+    .mr-hero-buttons  { width:100% !important; }
+    .mr-hero-buttons a { flex:1 1 auto !important; text-align:center !important; padding:15px 18px !important; }
+
+    .mr-stats         { grid-template-columns:repeat(2, 1fr) !important; }
+    .mr-stat          { padding:18px 16px 18px 0 !important; }
+    .mr-stat:nth-child(even)   { border-right:0 !important; }
+    .mr-stat:nth-child(-n+2)   { border-bottom:1px solid rgba(242,239,233,0.16) !important; }
+    .mr-stat-value    { font-size:26px !important; }
+
+    .mr-section-head  { flex-direction:column !important; align-items:flex-start !important; gap:12px !important; }
+    .mr-payload-grid  { grid-template-columns:1fr !important; }
+    .mr-payload       { min-height:0 !important; padding:30px 22px 34px !important; }
+
+    .mr-map           { aspect-ratio:4 / 5 !important; }
+    .mr-map-cap       { padding:12px 12px !important; font-size:8.5px !important; letter-spacing:0.1em !important; gap:8px !important; }
+    .mr-stage         { height:56vh !important; }
+    .mr-drag-hint     { display:none !important; }
+
+    .mr-brand-lockup  { padding:40px 24px !important; gap:28px !important; }
+    .mr-lockup-mark   { width:38px !important; height:38px !important; border-width:9px !important; }
+    .mr-lockup-word   { font-size:38px !important; }
+    .mr-mark-word     { font-size:28px !important; }
+    .mr-mark-dot      { width:26px !important; height:26px !important; border-width:6px !important; }
+    .mr-palette       { grid-template-columns:repeat(2, 1fr) !important; gap:16px !important; }
+    .mr-palette-chip  { height:88px !important; }
+    .mr-type          { grid-template-columns:1fr !important; }
+    .mr-type-sample   { font-size:38px !important; }
+    .mr-type-sample-mono { font-size:30px !important; }
+
+    .mr-footer-inner  { flex-direction:column !important; align-items:flex-start !important; gap:18px !important; }
+  }
 </style>
 </head>
 <body>
@@ -31,12 +100,12 @@
 <div style="background:#F2EFE9; color:#14150F; font-family:Archivo, Helvetica, Arial, sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden;">
 
   <header style="position:sticky; top:0; z-index:50; background:rgba(242,239,233,0.86); backdrop-filter:blur(14px); border-bottom:1px solid rgba(20,21,15,0.12);">
-    <div style="max-width:1440px; margin:0 auto; padding:16px 40px; display:flex; align-items:center; justify-content:space-between; gap:32px;">
+    <div class="mr-header-inner" style="max-width:1440px; margin:0 auto; padding:16px 40px; display:flex; align-items:center; justify-content:space-between; gap:32px;">
       <a href="#top" style="display:flex; align-items:center; gap:12px;">
-        <span style="width:26px; height:26px; border-radius:50%; border:6px solid #E2571E; display:block;"></span>
-        <span style="font-size:26px; font-weight:900; letter-spacing:-0.045em;">MILKRUN</span>
+        <span class="mr-logo-mark" style="width:26px; height:26px; border-radius:50%; border:6px solid #E2571E; display:block;"></span>
+        <span class="mr-logo-word" style="font-size:26px; font-weight:900; letter-spacing:-0.045em;">MILKRUN</span>
       </a>
-      <nav style="display:flex; align-items:center; gap:36px; font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;">
+      <nav class="mr-nav" style="display:flex; align-items:center; gap:36px; font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;">
         <a href="#network">Network</a>
         <a href="#payload">Payload</a>
         <a href="#aircraft">Aircraft</a>
@@ -46,19 +115,19 @@
     </div>
   </header>
 
-  <section id="top" style="position:relative; min-height:88vh; display:flex; flex-direction:column; justify-content:space-between; padding:0; background:#14150F; color:#F2EFE9; overflow:hidden;">
+  <section id="top" class="mr-hero" style="position:relative; min-height:88vh; display:flex; flex-direction:column; justify-content:space-between; padding:0; background:#14150F; color:#F2EFE9; overflow:hidden;">
     <canvas id="mr-hero" style="position:absolute; inset:0; width:100%; height:100%; display:block;"></canvas>
     <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,11,8,0.94) 0%, rgba(10,11,8,0.55) 38%, rgba(10,11,8,0.12) 70%, rgba(10,11,8,0.5) 100%);"></div>
     <div style="position:absolute; inset:0; background-image:repeating-linear-gradient(115deg, rgba(242,239,233,0.05) 0 1px, transparent 1px 26px);"></div>
 
     <div style="position:relative; flex:1 1 auto; min-height:120px;"></div>
 
-    <div style="position:relative; max-width:1440px; width:100%; margin:0 auto; padding:24px 40px 56px;">
-      <p style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:#E2571E; margin:0 0 28px;">Mount Currie, British Columbia</p>
-      <h1 style="margin:0; font-size:clamp(48px, 7.4vw, 116px); line-height:0.92; font-weight:900; letter-spacing:-0.045em; max-width:16ch; text-wrap:balance;">Medicine over the mountains, in minutes.</h1>
-      <div style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:40px; margin-top:44px;">
-        <p style="margin:0; max-width:40ch; font-size:20px; line-height:1.5; color:rgba(242,239,233,0.78);">We fly medical supplies to remote BC communities by autonomous drone.</p>
-        <div style="display:flex; gap:12px;">
+    <div class="mr-hero-body" style="position:relative; max-width:1440px; width:100%; margin:0 auto; padding:24px 40px 56px;">
+      <p style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:#E2571E; margin:0 0 28px;">Proposal · Mount Currie, British Columbia</p>
+      <h1 style="margin:0; font-size:clamp(40px, 7.4vw, 116px); line-height:0.92; font-weight:900; letter-spacing:-0.045em; max-width:16ch; text-wrap:balance;">Medicine over the mountains, in minutes.</h1>
+      <div class="mr-hero-actions" style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:40px; margin-top:44px;">
+        <p style="margin:0; max-width:40ch; font-size:20px; line-height:1.5; color:rgba(242,239,233,0.78);">A proposal to fly medical supplies to remote BC communities by autonomous drone.</p>
+        <div class="mr-hero-buttons" style="display:flex; gap:12px;">
           <a href="#network" class="mr-cta-solid" style="background:#E2571E; color:#FBFAF7; padding:16px 28px; border-radius:100px; font-size:14px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">See the network</a>
           <a href="#contact" class="mr-cta-ghost" style="border:1px solid rgba(242,239,233,0.35); padding:16px 28px; border-radius:100px; font-size:14px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">Health authorities</a>
         </div>
@@ -66,41 +135,41 @@
     </div>
 
     <div style="position:relative; border-top:1px solid rgba(242,239,233,0.16); background:rgba(20,21,15,0.5);">
-      <div style="max-width:1440px; margin:0 auto; padding:0 40px; display:grid; grid-template-columns:repeat(4, 1fr);">
-        <div style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
-          <div style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">7</div>
-          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Communities served</div>
+      <div class="mr-inner mr-stats" style="max-width:1440px; margin:0 auto; padding:0 40px; display:grid; grid-template-columns:repeat(4, 1fr);">
+        <div class="mr-stat" style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
+          <div class="mr-stat-value" style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">7</div>
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Communities in phase one</div>
         </div>
-        <div style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
-          <div style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">4.5 kg</div>
+        <div class="mr-stat" style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
+          <div class="mr-stat-value" style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">4.5 kg</div>
           <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Cold-chain payload</div>
         </div>
-        <div style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
-          <div style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">180 km</div>
-          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Range per run</div>
+        <div class="mr-stat" style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
+          <div class="mr-stat-value" style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">180 km</div>
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Designed range per run</div>
         </div>
-        <div style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
-          <div style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">24 min</div>
-          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Median door to door</div>
+        <div class="mr-stat" style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
+          <div class="mr-stat-value" style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">24 min</div>
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Target door to door</div>
         </div>
       </div>
     </div>
   </section>
 
-  <section style="max-width:1440px; margin:0 auto; padding:120px 40px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.25fr); gap:80px; align-items:start;">
+  <section class="mr-section mr-problem" style="max-width:1440px; margin:0 auto; padding:120px 40px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.25fr); gap:80px; align-items:start;">
     <h2 style="margin:0; font-size:14px; font-family:'IBM Plex Mono', monospace; letter-spacing:0.18em; text-transform:uppercase; color:#E2571E;">The problem</h2>
     <div>
-      <p style="margin:0; font-size:clamp(26px, 3vw, 42px); line-height:1.22; font-weight:600; letter-spacing:-0.025em; text-wrap:pretty;">A blood sample drawn in Skatin waits a day for someone to drive it out. A prescription waits for the road to reopen. We fly it instead — same route, same time, every day.</p>
+      <p style="margin:0; font-size:clamp(24px, 3vw, 42px); line-height:1.22; font-weight:600; letter-spacing:-0.025em; text-wrap:pretty;">A blood sample drawn in Skatin waits a day for someone to drive it out. A prescription waits for the road to reopen. MILKRUN would fly it instead — same route, same time, every day.</p>
     </div>
   </section>
 
-  <section id="payload" style="background:#14150F; color:#F2EFE9; padding:110px 0;">
-    <div style="max-width:1440px; margin:0 auto; padding:0 40px;">
-      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; padding-bottom:36px; border-bottom:1px solid rgba(242,239,233,0.2);">
-        <h2 style="margin:0; font-size:clamp(34px,4.4vw,64px); font-weight:900; letter-spacing:-0.04em;">What we carry</h2>
+  <section id="payload" class="mr-band" style="background:#14150F; color:#F2EFE9; padding:110px 0;">
+    <div class="mr-inner" style="max-width:1440px; margin:0 auto; padding:0 40px;">
+      <div class="mr-section-head" style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; padding-bottom:36px; border-bottom:1px solid rgba(242,239,233,0.2);">
+        <h2 style="margin:0; font-size:clamp(30px,4.4vw,64px); font-weight:900; letter-spacing:-0.04em;">What we'd carry</h2>
         <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(242,239,233,0.55);">Up to 4.5 kg, kept at 2–8°C</span>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:rgba(242,239,233,0.2); border-bottom:1px solid rgba(242,239,233,0.2);">
+      <div class="mr-payload-grid" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:rgba(242,239,233,0.2); border-bottom:1px solid rgba(242,239,233,0.2);">
         <div class="mr-payload" style="background:#14150F; padding:40px 28px 48px; min-height:280px; display:flex; flex-direction:column; gap:14px;">
           <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; color:#E2571E;">01</span>
           <h3 style="margin:0; font-size:24px; font-weight:700; letter-spacing:-0.02em;">Medicines</h3>
@@ -125,13 +194,14 @@
     </div>
   </section>
 
-  <section id="network" style="max-width:1440px; margin:0 auto; padding:120px 40px;">
-    <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:72px; align-items:center;">
+  <section id="network" class="mr-section" style="max-width:1440px; margin:0 auto; padding:120px 40px;">
+    <div class="mr-network-grid" style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:72px; align-items:center;">
       <div>
         <p style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#E2571E; margin:0 0 22px;">The network</p>
-        <h2 style="margin:0; font-size:clamp(34px,4.2vw,60px); font-weight:900; letter-spacing:-0.04em; line-height:1.02;">Starting where the roads run out.</h2>
-        <p style="margin:24px 0 0; font-size:18px; line-height:1.6; max-width:44ch; color:rgba(20,21,15,0.68);">We fly from the Es zúmin' clinic at Mount Currie into the Lillooet Lake valley — places that today take hours of forest service road.</p>
-        <div style="margin-top:40px; display:flex; flex-direction:column; gap:0; border-top:1px solid rgba(20,21,15,0.16);">
+        <h2 style="margin:0; font-size:clamp(30px,4.2vw,60px); font-weight:900; letter-spacing:-0.04em; line-height:1.02;">Starting where the roads run out.</h2>
+        <p style="margin:24px 0 0; font-size:18px; line-height:1.6; max-width:44ch; color:rgba(20,21,15,0.68);">Phase one would fly from a base at Mount Currie into the Lillooet Lake valley — places that today take hours of forest service road.</p>
+        <p style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5); margin:34px 0 0;">Estimated flight times</p>
+        <div style="margin-top:14px; display:flex; flex-direction:column; gap:0; border-top:1px solid rgba(20,21,15,0.16);">
           <div style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:18px 0; border-bottom:1px solid rgba(20,21,15,0.16);">
             <span style="font-size:17px; font-weight:600; letter-spacing:-0.01em;">Mount Currie → Skatin</span>
             <span style="font-family:'IBM Plex Mono', monospace; font-size:13px; color:rgba(20,21,15,0.55);">19 min</span>
@@ -154,20 +224,20 @@
           </div>
         </div>
       </div>
-      <div style="position:relative; aspect-ratio:4/5; border:1px solid rgba(20,21,15,0.2); background:#14150F; overflow:hidden;">
-        <iframe src="network-map.html" title="MILKRUN route network map" style="position:absolute; inset:0; width:100%; height:100%; border:0; display:block;"></iframe>
-        <div style="position:absolute; left:0; right:0; top:0; padding:16px 18px; pointer-events:none; display:flex; justify-content:space-between; gap:12px; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(242,239,233,0.7); background:linear-gradient(to bottom, rgba(20,21,15,0.8), transparent);">
-          <span>Phase one network</span>
+      <div class="mr-map" style="position:relative; aspect-ratio:4/5; border:1px solid rgba(20,21,15,0.2); background:#14150F; overflow:hidden;">
+        <iframe src="network-map.html" title="MILKRUN proposed route network map" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; border:0; display:block;"></iframe>
+        <div class="mr-map-cap" style="position:absolute; left:0; right:0; top:0; padding:16px 18px; pointer-events:none; display:flex; justify-content:space-between; gap:12px; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(242,239,233,0.7); background:linear-gradient(to bottom, rgba(20,21,15,0.8), transparent);">
+          <span>Proposed phase one</span>
           <span>Lillooet River valley, BC</span>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="aircraft" style="background:#E2571E; color:#14150F; padding:110px 0;">
-    <div style="max-width:1440px; margin:0 auto; padding:0 40px;">
-      <h2 style="margin:0 0 56px; font-size:clamp(34px,4.4vw,64px); font-weight:900; letter-spacing:-0.04em; max-width:18ch;">Built for mountain weather.</h2>
-      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:rgba(20,21,15,0.25);">
+  <section id="aircraft" class="mr-band" style="background:#E2571E; color:#14150F; padding:110px 0;">
+    <div class="mr-inner" style="max-width:1440px; margin:0 auto; padding:0 40px;">
+      <h2 style="margin:0 0 56px; font-size:clamp(30px,4.4vw,64px); font-weight:900; letter-spacing:-0.04em; max-width:18ch;">Designed for mountain weather.</h2>
+      <div class="mr-specs" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:rgba(20,21,15,0.25);">
         <div style="background:#E2571E; padding:36px 28px;">
           <div style="font-size:44px; font-weight:900; letter-spacing:-0.04em;">VTOL</div>
           <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; margin-top:8px;">No runway needed</div>
@@ -176,24 +246,24 @@
         <div style="background:#E2571E; padding:36px 28px;">
           <div style="font-size:44px; font-weight:900; letter-spacing:-0.04em;">All-weather</div>
           <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; margin-top:8px;">Built for the range</div>
-          <p style="margin:16px 0 0; font-size:15px; line-height:1.55; color:rgba(20,21,15,0.75);">Flies through icing, gusts and valley fog.</p>
+          <p style="margin:16px 0 0; font-size:15px; line-height:1.55; color:rgba(20,21,15,0.75);">Designed to fly through icing, gusts and valley fog.</p>
         </div>
         <div style="background:#E2571E; padding:36px 28px;">
           <div style="font-size:44px; font-weight:900; letter-spacing:-0.04em;">BVLOS</div>
           <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; margin-top:8px;">Fully autonomous</div>
-          <p style="margin:16px 0 0; font-size:15px; line-height:1.55; color:rgba(20,21,15,0.75);">Approved by Transport Canada, watched from the ground.</p>
+          <p style="margin:16px 0 0; font-size:15px; line-height:1.55; color:rgba(20,21,15,0.75);">Subject to Transport Canada approval, watched from the ground.</p>
         </div>
       </div>
-      <div style="position:relative; margin-top:1px; background:#14150F; height:min(62vh, 560px);">
-        <iframe src="vtol.html" title="MILKRUN VTOL aircraft, 3D" style="position:absolute; inset:0; width:100%; height:100%; border:0; display:block;"></iframe>
-        <div style="position:absolute; left:0; bottom:0; padding:20px 26px; pointer-events:none; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(242,239,233,0.6);">MR-1 · drag to rotate</div>
+      <div class="mr-stage" style="position:relative; margin-top:1px; background:#14150F; height:min(62vh, 560px);">
+        <iframe src="vtol.html" title="MILKRUN VTOL aircraft concept, 3D" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; border:0; display:block;"></iframe>
+        <div style="position:absolute; left:0; bottom:0; padding:20px 26px; pointer-events:none; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(242,239,233,0.6);">MR-1 concept<span class="mr-drag-hint"> · drag to rotate</span></div>
       </div>
     </div>
   </section>
 
-  <section style="max-width:1440px; margin:0 auto; padding:120px 40px;">
-    <p style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#E2571E; margin:0 0 48px;">How a run works</p>
-    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:56px;">
+  <section class="mr-section" style="max-width:1440px; margin:0 auto; padding:120px 40px;">
+    <p style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#E2571E; margin:0 0 48px;">How a run would work</p>
+    <div class="mr-steps" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:56px;">
       <div style="border-top:2px solid #14150F; padding-top:22px;">
         <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.14em; color:rgba(20,21,15,0.5);">01</span>
         <h3 style="margin:14px 0 12px; font-size:26px; font-weight:700; letter-spacing:-0.025em;">Packed</h3>
@@ -212,18 +282,18 @@
     </div>
   </section>
 
-  <section id="brand" style="background:#FBFAF7; border-top:1px solid rgba(20,21,15,0.14); border-bottom:1px solid rgba(20,21,15,0.14); padding:110px 0;">
-    <div style="max-width:1440px; margin:0 auto; padding:0 40px;">
-      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; margin-bottom:56px;">
-        <h2 style="margin:0; font-size:clamp(30px,3.4vw,48px); font-weight:900; letter-spacing:-0.04em;">The mark</h2>
+  <section id="brand" class="mr-band" style="background:#FBFAF7; border-top:1px solid rgba(20,21,15,0.14); border-bottom:1px solid rgba(20,21,15,0.14); padding:110px 0;">
+    <div class="mr-inner" style="max-width:1440px; margin:0 auto; padding:0 40px;">
+      <div class="mr-section-head" style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; margin-bottom:56px;">
+        <h2 style="margin:0; font-size:clamp(28px,3.4vw,48px); font-weight:900; letter-spacing:-0.04em;">The mark</h2>
         <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Identity system v1</span>
       </div>
 
-      <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:24px;">
-        <div style="border:1px solid rgba(20,21,15,0.16); padding:72px 48px; display:flex; flex-direction:column; gap:36px; justify-content:center;">
+      <div class="mr-brand-grid" style="display:grid; grid-template-columns:1.4fr 1fr; gap:24px;">
+        <div class="mr-brand-lockup" style="border:1px solid rgba(20,21,15,0.16); padding:72px 48px; display:flex; flex-direction:column; gap:36px; justify-content:center;">
           <div style="display:flex; align-items:center; gap:20px;">
-            <span style="width:56px; height:56px; border-radius:50%; border:13px solid #E2571E; display:block;"></span>
-            <span style="font-size:64px; font-weight:900; letter-spacing:-0.05em; line-height:1;">MILKRUN</span>
+            <span class="mr-lockup-mark" style="width:56px; height:56px; border-radius:50%; border:13px solid #E2571E; display:block;"></span>
+            <span class="mr-lockup-word" style="font-size:64px; font-weight:900; letter-spacing:-0.05em; line-height:1;">MILKRUN</span>
           </div>
           <div style="height:1px; background:rgba(20,21,15,0.14);"></div>
           <div style="display:flex; align-items:center; gap:16px;">
@@ -234,42 +304,42 @@
             </div>
           </div>
         </div>
-        <div style="display:grid; grid-template-rows:1fr 1fr; gap:24px;">
+        <div class="mr-brand-marks" style="display:grid; grid-template-rows:1fr 1fr; gap:24px;">
           <div style="background:#14150F; display:flex; align-items:center; justify-content:center; gap:14px;">
-            <span style="width:34px; height:34px; border-radius:50%; border:8px solid #E2571E; display:block;"></span>
-            <span style="font-size:38px; font-weight:900; letter-spacing:-0.05em; color:#F2EFE9;">MILKRUN</span>
+            <span class="mr-mark-dot" style="width:34px; height:34px; border-radius:50%; border:8px solid #E2571E; display:block;"></span>
+            <span class="mr-mark-word" style="font-size:38px; font-weight:900; letter-spacing:-0.05em; color:#F2EFE9;">MILKRUN</span>
           </div>
           <div style="background:#E2571E; display:flex; align-items:center; justify-content:center; gap:14px;">
-            <span style="width:34px; height:34px; border-radius:50%; border:8px solid #14150F; display:block;"></span>
-            <span style="font-size:38px; font-weight:900; letter-spacing:-0.05em; color:#14150F;">MILKRUN</span>
+            <span class="mr-mark-dot" style="width:34px; height:34px; border-radius:50%; border:8px solid #14150F; display:block;"></span>
+            <span class="mr-mark-word" style="font-size:38px; font-weight:900; letter-spacing:-0.05em; color:#14150F;">MILKRUN</span>
           </div>
         </div>
       </div>
 
-      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:24px;">
+      <div class="mr-palette" style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:24px;">
         <div style="border:1px solid rgba(20,21,15,0.16);">
-          <div style="height:120px; background:#E2571E;"></div>
+          <div class="mr-palette-chip" style="height:120px; background:#E2571E;"></div>
           <div style="padding:16px 18px;">
             <div style="font-size:15px; font-weight:700; letter-spacing:-0.01em;">Signal</div>
             <div style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:rgba(20,21,15,0.55); margin-top:4px;">#E2571E</div>
           </div>
         </div>
         <div style="border:1px solid rgba(20,21,15,0.16);">
-          <div style="height:120px; background:#14150F;"></div>
+          <div class="mr-palette-chip" style="height:120px; background:#14150F;"></div>
           <div style="padding:16px 18px;">
             <div style="font-size:15px; font-weight:700; letter-spacing:-0.01em;">Ink</div>
             <div style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:rgba(20,21,15,0.55); margin-top:4px;">#14150F</div>
           </div>
         </div>
         <div style="border:1px solid rgba(20,21,15,0.16);">
-          <div style="height:120px; background:#F2EFE9;"></div>
+          <div class="mr-palette-chip" style="height:120px; background:#F2EFE9;"></div>
           <div style="padding:16px 18px;">
             <div style="font-size:15px; font-weight:700; letter-spacing:-0.01em;">Paper</div>
             <div style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:rgba(20,21,15,0.55); margin-top:4px;">#F2EFE9</div>
           </div>
         </div>
         <div style="border:1px solid rgba(20,21,15,0.16);">
-          <div style="height:120px; background:#C9D4D2;"></div>
+          <div class="mr-palette-chip" style="height:120px; background:#C9D4D2;"></div>
           <div style="padding:16px 18px;">
             <div style="font-size:15px; font-weight:700; letter-spacing:-0.01em;">Glacier</div>
             <div style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:rgba(20,21,15,0.55); margin-top:4px;">#C9D4D2</div>
@@ -277,22 +347,22 @@
         </div>
       </div>
 
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px;">
+      <div class="mr-type" style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px;">
         <div style="border:1px solid rgba(20,21,15,0.16); padding:32px 36px;">
           <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Display — Archivo Black / 900</div>
-          <div style="font-size:52px; font-weight:900; letter-spacing:-0.045em; margin-top:14px;">AaBbCc 0123</div>
+          <div class="mr-type-sample" style="font-size:52px; font-weight:900; letter-spacing:-0.045em; margin-top:14px;">AaBbCc 0123</div>
         </div>
         <div style="border:1px solid rgba(20,21,15,0.16); padding:32px 36px;">
           <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Data — IBM Plex Mono / 400</div>
-          <div style="font-family:'IBM Plex Mono', monospace; font-size:40px; margin-top:16px;">AaBbCc 0123</div>
+          <div class="mr-type-sample-mono" style="font-family:'IBM Plex Mono', monospace; font-size:40px; margin-top:16px;">AaBbCc 0123</div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="contact" style="background:#14150F; color:#F2EFE9; padding:130px 0;">
-    <div style="max-width:1440px; margin:0 auto; padding:0 40px; display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:72px; align-items:end;">
-      <h2 style="margin:0; font-size:clamp(38px,5.6vw,84px); font-weight:900; letter-spacing:-0.045em; line-height:0.98;">Fly your first route with us.</h2>
+  <section id="contact" class="mr-band" style="background:#14150F; color:#F2EFE9; padding:130px 0;">
+    <div class="mr-inner mr-contact-grid" style="max-width:1440px; margin:0 auto; padding:0 40px; display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:72px; align-items:end;">
+      <h2 style="margin:0; font-size:clamp(34px,5.6vw,84px); font-weight:900; letter-spacing:-0.045em; line-height:0.98;">Fly your first route with us.</h2>
       <div>
         <p style="margin:0 0 28px; font-size:18px; line-height:1.6; color:rgba(242,239,233,0.7);">For health authorities, First Nations health partners, labs and pharmacies.</p>
         <a href="mailto:fly@milkrun.ca" class="mr-cta-solid" style="display:inline-flex; align-items:center; gap:12px; background:#E2571E; color:#FBFAF7; padding:18px 30px; border-radius:100px; font-size:15px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">fly@milkrun.ca</a>
@@ -301,7 +371,7 @@
   </section>
 
   <footer style="background:#14150F; color:rgba(242,239,233,0.55); border-top:1px solid rgba(242,239,233,0.16); padding:36px 0;">
-    <div style="max-width:1440px; margin:0 auto; padding:0 40px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:24px; font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.08em;">
+    <div class="mr-inner mr-footer-inner" style="max-width:1440px; margin:0 auto; padding:0 40px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:24px; font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.08em;">
       <span>MILKRUN Aviation Inc. · Vancouver, BC</span>
       <div style="display:flex; gap:28px;">
         <a href="#network">Network</a>
@@ -330,6 +400,7 @@
   }
   resize();
   window.addEventListener("resize", resize);
+  window.addEventListener("orientationchange", function () { setTimeout(resize, 150); });
 
   // procedural ridgeline: sum of sines, seeded per layer
   function ridge(x, seed, amp, freq) {
