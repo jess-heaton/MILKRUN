@@ -3,14 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:;">
 <title>MILKRUN — Medicine over the mountains, in minutes.</title>
 <meta name="description" content="MILKRUN flies medical supplies to remote BC communities by autonomous drone — cold-chain medicines, blood, lab samples and emergency kits from Mount Currie into the Lillooet Lake valley.">
-<script src="./support.js"></script>
-</head>
-<body>
-<x-dc>
-<helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -23,8 +17,16 @@
   @keyframes mr-drift { from { background-position: 0 0; } to { background-position: 240px 0; } }
   @keyframes mr-pulse { 0%,100% { opacity:.25; transform:scale(1); } 50% { opacity:.7; transform:scale(1.35); } }
   @keyframes mr-track { from { transform: translateX(-8%); } to { transform: translateX(8%); } }
+
+  /* Hover states. These were style-hover="" attributes on the Design Component;
+     the base styles stay inline, so the hover declarations need !important. */
+  .mr-nav-cta:hover     { background:#E2571E !important; color:#FBFAF7 !important; }
+  .mr-cta-solid:hover   { background:#F2EFE9 !important; color:#14150F !important; }
+  .mr-cta-ghost:hover   { border-color:#F2EFE9 !important; color:#F2EFE9 !important; }
+  .mr-payload:hover     { background:#1D1E16 !important; }
 </style>
-</helmet>
+</head>
+<body>
 
 <div style="background:#F2EFE9; color:#14150F; font-family:Archivo, Helvetica, Arial, sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden;">
 
@@ -39,13 +41,13 @@
         <a href="#payload">Payload</a>
         <a href="#aircraft">Aircraft</a>
         <a href="#brand">Brand</a>
-        <a href="#contact" style="background:#14150F; color:#F2EFE9; padding:11px 20px; border-radius:100px;" style-hover="background:#E2571E; color:#FBFAF7;">Partner with us</a>
+        <a href="#contact" class="mr-nav-cta" style="background:#14150F; color:#F2EFE9; padding:11px 20px; border-radius:100px;">Partner with us</a>
       </nav>
     </div>
   </header>
 
   <section id="top" style="position:relative; min-height:88vh; display:flex; flex-direction:column; justify-content:space-between; padding:0; background:#14150F; color:#F2EFE9; overflow:hidden;">
-    <canvas ref="{{ canvasRef }}" style="position:absolute; inset:0; width:100%; height:100%; display:block;"></canvas>
+    <canvas id="mr-hero" style="position:absolute; inset:0; width:100%; height:100%; display:block;"></canvas>
     <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,11,8,0.94) 0%, rgba(10,11,8,0.55) 38%, rgba(10,11,8,0.12) 70%, rgba(10,11,8,0.5) 100%);"></div>
     <div style="position:absolute; inset:0; background-image:repeating-linear-gradient(115deg, rgba(242,239,233,0.05) 0 1px, transparent 1px 26px);"></div>
 
@@ -57,20 +59,30 @@
       <div style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:40px; margin-top:44px;">
         <p style="margin:0; max-width:40ch; font-size:20px; line-height:1.5; color:rgba(242,239,233,0.78);">We fly medical supplies to remote BC communities by autonomous drone.</p>
         <div style="display:flex; gap:12px;">
-          <a href="#network" style="background:#E2571E; color:#FBFAF7; padding:16px 28px; border-radius:100px; font-size:14px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;" style-hover="background:#F2EFE9; color:#14150F;">See the network</a>
-          <a href="#contact" style="border:1px solid rgba(242,239,233,0.35); padding:16px 28px; border-radius:100px; font-size:14px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;" style-hover="border-color:#F2EFE9; color:#F2EFE9;">Health authorities</a>
+          <a href="#network" class="mr-cta-solid" style="background:#E2571E; color:#FBFAF7; padding:16px 28px; border-radius:100px; font-size:14px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">See the network</a>
+          <a href="#contact" class="mr-cta-ghost" style="border:1px solid rgba(242,239,233,0.35); padding:16px 28px; border-radius:100px; font-size:14px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">Health authorities</a>
         </div>
       </div>
     </div>
 
     <div style="position:relative; border-top:1px solid rgba(242,239,233,0.16); background:rgba(20,21,15,0.5);">
       <div style="max-width:1440px; margin:0 auto; padding:0 40px; display:grid; grid-template-columns:repeat(4, 1fr);">
-        <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
-          <div style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
-            <div style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">{{ s.value }}</div>
-            <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">{{ s.label }}</div>
-          </div>
-        </sc-for>
+        <div style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
+          <div style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">7</div>
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Communities served</div>
+        </div>
+        <div style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
+          <div style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">4.5 kg</div>
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Cold-chain payload</div>
+        </div>
+        <div style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
+          <div style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">180 km</div>
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Range per run</div>
+        </div>
+        <div style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
+          <div style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">24 min</div>
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Median door to door</div>
+        </div>
       </div>
     </div>
   </section>
@@ -89,13 +101,26 @@
         <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(242,239,233,0.55);">Up to 4.5 kg, kept at 2–8°C</span>
       </div>
       <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:rgba(242,239,233,0.2); border-bottom:1px solid rgba(242,239,233,0.2);">
-        <sc-for list="{{ payloads }}" as="p" hint-placeholder-count="4">
-          <div style="background:#14150F; padding:40px 28px 48px; min-height:280px; display:flex; flex-direction:column; gap:14px;" style-hover="background:#1D1E16;">
-            <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; color:#E2571E;">{{ p.no }}</span>
-            <h3 style="margin:0; font-size:24px; font-weight:700; letter-spacing:-0.02em;">{{ p.title }}</h3>
-            <p style="margin:0; font-size:15px; line-height:1.55; color:rgba(242,239,233,0.66);">{{ p.body }}</p>
-          </div>
-        </sc-for>
+        <div class="mr-payload" style="background:#14150F; padding:40px 28px 48px; min-height:280px; display:flex; flex-direction:column; gap:14px;">
+          <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; color:#E2571E;">01</span>
+          <h3 style="margin:0; font-size:24px; font-weight:700; letter-spacing:-0.02em;">Medicines</h3>
+          <p style="margin:0; font-size:15px; line-height:1.55; color:rgba(242,239,233,0.66);">Pharmacy resupply and urgent single doses.</p>
+        </div>
+        <div class="mr-payload" style="background:#14150F; padding:40px 28px 48px; min-height:280px; display:flex; flex-direction:column; gap:14px;">
+          <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; color:#E2571E;">02</span>
+          <h3 style="margin:0; font-size:24px; font-weight:700; letter-spacing:-0.02em;">Blood &amp; plasma</h3>
+          <p style="margin:0; font-size:15px; line-height:1.55; color:rgba(242,239,233,0.66);">Kept cold and temperature-logged the whole way.</p>
+        </div>
+        <div class="mr-payload" style="background:#14150F; padding:40px 28px 48px; min-height:280px; display:flex; flex-direction:column; gap:14px;">
+          <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; color:#E2571E;">03</span>
+          <h3 style="margin:0; font-size:24px; font-weight:700; letter-spacing:-0.02em;">Lab samples</h3>
+          <p style="margin:0; font-size:15px; line-height:1.55; color:rgba(242,239,233,0.66);">Flown out same day, results back same day.</p>
+        </div>
+        <div class="mr-payload" style="background:#14150F; padding:40px 28px 48px; min-height:280px; display:flex; flex-direction:column; gap:14px;">
+          <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; color:#E2571E;">04</span>
+          <h3 style="margin:0; font-size:24px; font-weight:700; letter-spacing:-0.02em;">Emergency kits</h3>
+          <p style="margin:0; font-size:15px; line-height:1.55; color:rgba(242,239,233,0.66);">Naloxone, epinephrine, trauma supplies on demand.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -107,12 +132,26 @@
         <h2 style="margin:0; font-size:clamp(34px,4.2vw,60px); font-weight:900; letter-spacing:-0.04em; line-height:1.02;">Starting where the roads run out.</h2>
         <p style="margin:24px 0 0; font-size:18px; line-height:1.6; max-width:44ch; color:rgba(20,21,15,0.68);">We fly from the Es zúmin' clinic at Mount Currie into the Lillooet Lake valley — places that today take hours of forest service road.</p>
         <div style="margin-top:40px; display:flex; flex-direction:column; gap:0; border-top:1px solid rgba(20,21,15,0.16);">
-          <sc-for list="{{ routes }}" as="r" hint-placeholder-count="4">
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:18px 0; border-bottom:1px solid rgba(20,21,15,0.16);">
-              <span style="font-size:17px; font-weight:600; letter-spacing:-0.01em;">{{ r.leg }}</span>
-              <span style="font-family:'IBM Plex Mono', monospace; font-size:13px; color:rgba(20,21,15,0.55);">{{ r.time }}</span>
-            </div>
-          </sc-for>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:18px 0; border-bottom:1px solid rgba(20,21,15,0.16);">
+            <span style="font-size:17px; font-weight:600; letter-spacing:-0.01em;">Mount Currie → Skatin</span>
+            <span style="font-family:'IBM Plex Mono', monospace; font-size:13px; color:rgba(20,21,15,0.55);">19 min</span>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:18px 0; border-bottom:1px solid rgba(20,21,15,0.16);">
+            <span style="font-size:17px; font-weight:600; letter-spacing:-0.01em;">Mount Currie → Samahquam</span>
+            <span style="font-family:'IBM Plex Mono', monospace; font-size:13px; color:rgba(20,21,15,0.55);">16 min</span>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:18px 0; border-bottom:1px solid rgba(20,21,15,0.16);">
+            <span style="font-size:17px; font-weight:600; letter-spacing:-0.01em;">Mount Currie → Port Douglas</span>
+            <span style="font-family:'IBM Plex Mono', monospace; font-size:13px; color:rgba(20,21,15,0.55);">27 min</span>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:18px 0; border-bottom:1px solid rgba(20,21,15,0.16);">
+            <span style="font-size:17px; font-weight:600; letter-spacing:-0.01em;">Mount Currie → N'Quatqua (D'Arcy)</span>
+            <span style="font-family:'IBM Plex Mono', monospace; font-size:13px; color:rgba(20,21,15,0.55);">12 min</span>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:18px 0; border-bottom:1px solid rgba(20,21,15,0.16);">
+            <span style="font-size:17px; font-weight:600; letter-spacing:-0.01em;">Mount Currie → Pemberton Health Centre</span>
+            <span style="font-family:'IBM Plex Mono', monospace; font-size:13px; color:rgba(20,21,15,0.55);">6 min</span>
+          </div>
         </div>
       </div>
       <div style="position:relative; aspect-ratio:4/5; border:1px solid rgba(20,21,15,0.2); background:#14150F; overflow:hidden;">
@@ -129,13 +168,21 @@
     <div style="max-width:1440px; margin:0 auto; padding:0 40px;">
       <h2 style="margin:0 0 56px; font-size:clamp(34px,4.4vw,64px); font-weight:900; letter-spacing:-0.04em; max-width:18ch;">Built for mountain weather.</h2>
       <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:rgba(20,21,15,0.25);">
-        <sc-for list="{{ specs }}" as="sp" hint-placeholder-count="3">
-          <div style="background:#E2571E; padding:36px 28px;">
-            <div style="font-size:44px; font-weight:900; letter-spacing:-0.04em;">{{ sp.value }}</div>
-            <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; margin-top:8px;">{{ sp.label }}</div>
-            <p style="margin:16px 0 0; font-size:15px; line-height:1.55; color:rgba(20,21,15,0.75);">{{ sp.body }}</p>
-          </div>
-        </sc-for>
+        <div style="background:#E2571E; padding:36px 28px;">
+          <div style="font-size:44px; font-weight:900; letter-spacing:-0.04em;">VTOL</div>
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; margin-top:8px;">No runway needed</div>
+          <p style="margin:16px 0 0; font-size:15px; line-height:1.55; color:rgba(20,21,15,0.75);">Lifts straight up off a 3 m painted circle.</p>
+        </div>
+        <div style="background:#E2571E; padding:36px 28px;">
+          <div style="font-size:44px; font-weight:900; letter-spacing:-0.04em;">All-weather</div>
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; margin-top:8px;">Built for the range</div>
+          <p style="margin:16px 0 0; font-size:15px; line-height:1.55; color:rgba(20,21,15,0.75);">Flies through icing, gusts and valley fog.</p>
+        </div>
+        <div style="background:#E2571E; padding:36px 28px;">
+          <div style="font-size:44px; font-weight:900; letter-spacing:-0.04em;">BVLOS</div>
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; margin-top:8px;">Fully autonomous</div>
+          <p style="margin:16px 0 0; font-size:15px; line-height:1.55; color:rgba(20,21,15,0.75);">Approved by Transport Canada, watched from the ground.</p>
+        </div>
       </div>
       <div style="position:relative; margin-top:1px; background:#14150F; height:min(62vh, 560px);">
         <iframe src="vtol.html" title="MILKRUN VTOL aircraft, 3D" style="position:absolute; inset:0; width:100%; height:100%; border:0; display:block;"></iframe>
@@ -147,83 +194,108 @@
   <section style="max-width:1440px; margin:0 auto; padding:120px 40px;">
     <p style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#E2571E; margin:0 0 48px;">How a run works</p>
     <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:56px;">
-      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
-        <div style="border-top:2px solid #14150F; padding-top:22px;">
-          <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.14em; color:rgba(20,21,15,0.5);">{{ st.no }}</span>
-          <h3 style="margin:14px 0 12px; font-size:26px; font-weight:700; letter-spacing:-0.025em;">{{ st.title }}</h3>
-          <p style="margin:0; font-size:16px; line-height:1.6; color:rgba(20,21,15,0.68);">{{ st.body }}</p>
-        </div>
-      </sc-for>
+      <div style="border-top:2px solid #14150F; padding-top:22px;">
+        <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.14em; color:rgba(20,21,15,0.5);">01</span>
+        <h3 style="margin:14px 0 12px; font-size:26px; font-weight:700; letter-spacing:-0.025em;">Packed</h3>
+        <p style="margin:0; font-size:16px; line-height:1.6; color:rgba(20,21,15,0.68);">A clinician seals the cooled box and scans it.</p>
+      </div>
+      <div style="border-top:2px solid #14150F; padding-top:22px;">
+        <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.14em; color:rgba(20,21,15,0.5);">02</span>
+        <h3 style="margin:14px 0 12px; font-size:26px; font-weight:700; letter-spacing:-0.025em;">Flown</h3>
+        <p style="margin:0; font-size:16px; line-height:1.6; color:rgba(20,21,15,0.68);">The drone flies itself, tracked the whole way.</p>
+      </div>
+      <div style="border-top:2px solid #14150F; padding-top:22px;">
+        <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.14em; color:rgba(20,21,15,0.5);">03</span>
+        <h3 style="margin:14px 0 12px; font-size:26px; font-weight:700; letter-spacing:-0.025em;">Delivered</h3>
+        <p style="margin:0; font-size:16px; line-height:1.6; color:rgba(20,21,15,0.68);">It lands on the pad and unlocks by code.</p>
+      </div>
     </div>
   </section>
 
-  <sc-if value="{{ showBrandKit }}" hint-placeholder-val="{{ true }}">
-    <section id="brand" style="background:#FBFAF7; border-top:1px solid rgba(20,21,15,0.14); border-bottom:1px solid rgba(20,21,15,0.14); padding:110px 0;">
-      <div style="max-width:1440px; margin:0 auto; padding:0 40px;">
-        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; margin-bottom:56px;">
-          <h2 style="margin:0; font-size:clamp(30px,3.4vw,48px); font-weight:900; letter-spacing:-0.04em;">The mark</h2>
-          <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Identity system v1</span>
-        </div>
+  <section id="brand" style="background:#FBFAF7; border-top:1px solid rgba(20,21,15,0.14); border-bottom:1px solid rgba(20,21,15,0.14); padding:110px 0;">
+    <div style="max-width:1440px; margin:0 auto; padding:0 40px;">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; margin-bottom:56px;">
+        <h2 style="margin:0; font-size:clamp(30px,3.4vw,48px); font-weight:900; letter-spacing:-0.04em;">The mark</h2>
+        <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Identity system v1</span>
+      </div>
 
-        <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:24px;">
-          <div style="border:1px solid rgba(20,21,15,0.16); padding:72px 48px; display:flex; flex-direction:column; gap:36px; justify-content:center;">
-            <div style="display:flex; align-items:center; gap:20px;">
-              <span style="width:56px; height:56px; border-radius:50%; border:13px solid #E2571E; display:block;"></span>
-              <span style="font-size:64px; font-weight:900; letter-spacing:-0.05em; line-height:1;">MILKRUN</span>
-            </div>
-            <div style="height:1px; background:rgba(20,21,15,0.14);"></div>
-            <div style="display:flex; align-items:center; gap:16px;">
-              <span style="width:30px; height:30px; border-radius:50%; border:7px solid #14150F; display:block;"></span>
-              <div>
-                <div style="font-size:32px; font-weight:900; letter-spacing:-0.05em; line-height:1;">MILKRUN</div>
-                <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.28em; text-transform:uppercase; margin-top:6px; color:rgba(20,21,15,0.6);">Autonomous healthcare logistics</div>
-              </div>
-            </div>
+      <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:24px;">
+        <div style="border:1px solid rgba(20,21,15,0.16); padding:72px 48px; display:flex; flex-direction:column; gap:36px; justify-content:center;">
+          <div style="display:flex; align-items:center; gap:20px;">
+            <span style="width:56px; height:56px; border-radius:50%; border:13px solid #E2571E; display:block;"></span>
+            <span style="font-size:64px; font-weight:900; letter-spacing:-0.05em; line-height:1;">MILKRUN</span>
           </div>
-          <div style="display:grid; grid-template-rows:1fr 1fr; gap:24px;">
-            <div style="background:#14150F; display:flex; align-items:center; justify-content:center; gap:14px;">
-              <span style="width:34px; height:34px; border-radius:50%; border:8px solid #E2571E; display:block;"></span>
-              <span style="font-size:38px; font-weight:900; letter-spacing:-0.05em; color:#F2EFE9;">MILKRUN</span>
-            </div>
-            <div style="background:#E2571E; display:flex; align-items:center; justify-content:center; gap:14px;">
-              <span style="width:34px; height:34px; border-radius:50%; border:8px solid #14150F; display:block;"></span>
-              <span style="font-size:38px; font-weight:900; letter-spacing:-0.05em; color:#14150F;">MILKRUN</span>
+          <div style="height:1px; background:rgba(20,21,15,0.14);"></div>
+          <div style="display:flex; align-items:center; gap:16px;">
+            <span style="width:30px; height:30px; border-radius:50%; border:7px solid #14150F; display:block;"></span>
+            <div>
+              <div style="font-size:32px; font-weight:900; letter-spacing:-0.05em; line-height:1;">MILKRUN</div>
+              <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.28em; text-transform:uppercase; margin-top:6px; color:rgba(20,21,15,0.6);">Autonomous healthcare logistics</div>
             </div>
           </div>
         </div>
-
-        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:24px;">
-          <sc-for list="{{ palette }}" as="c" hint-placeholder-count="4">
-            <div style="border:1px solid rgba(20,21,15,0.16);">
-              <div style="height:120px; background:{{ c.hex }};"></div>
-              <div style="padding:16px 18px;">
-                <div style="font-size:15px; font-weight:700; letter-spacing:-0.01em;">{{ c.name }}</div>
-                <div style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:rgba(20,21,15,0.55); margin-top:4px;">{{ c.hex }}</div>
-              </div>
-            </div>
-          </sc-for>
-        </div>
-
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px;">
-          <div style="border:1px solid rgba(20,21,15,0.16); padding:32px 36px;">
-            <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Display — Archivo Black / 900</div>
-            <div style="font-size:52px; font-weight:900; letter-spacing:-0.045em; margin-top:14px;">AaBbCc 0123</div>
+        <div style="display:grid; grid-template-rows:1fr 1fr; gap:24px;">
+          <div style="background:#14150F; display:flex; align-items:center; justify-content:center; gap:14px;">
+            <span style="width:34px; height:34px; border-radius:50%; border:8px solid #E2571E; display:block;"></span>
+            <span style="font-size:38px; font-weight:900; letter-spacing:-0.05em; color:#F2EFE9;">MILKRUN</span>
           </div>
-          <div style="border:1px solid rgba(20,21,15,0.16); padding:32px 36px;">
-            <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Data — IBM Plex Mono / 400</div>
-            <div style="font-family:'IBM Plex Mono', monospace; font-size:40px; margin-top:16px;">AaBbCc 0123</div>
+          <div style="background:#E2571E; display:flex; align-items:center; justify-content:center; gap:14px;">
+            <span style="width:34px; height:34px; border-radius:50%; border:8px solid #14150F; display:block;"></span>
+            <span style="font-size:38px; font-weight:900; letter-spacing:-0.05em; color:#14150F;">MILKRUN</span>
           </div>
         </div>
       </div>
-    </section>
-  </sc-if>
+
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:24px;">
+        <div style="border:1px solid rgba(20,21,15,0.16);">
+          <div style="height:120px; background:#E2571E;"></div>
+          <div style="padding:16px 18px;">
+            <div style="font-size:15px; font-weight:700; letter-spacing:-0.01em;">Signal</div>
+            <div style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:rgba(20,21,15,0.55); margin-top:4px;">#E2571E</div>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(20,21,15,0.16);">
+          <div style="height:120px; background:#14150F;"></div>
+          <div style="padding:16px 18px;">
+            <div style="font-size:15px; font-weight:700; letter-spacing:-0.01em;">Ink</div>
+            <div style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:rgba(20,21,15,0.55); margin-top:4px;">#14150F</div>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(20,21,15,0.16);">
+          <div style="height:120px; background:#F2EFE9;"></div>
+          <div style="padding:16px 18px;">
+            <div style="font-size:15px; font-weight:700; letter-spacing:-0.01em;">Paper</div>
+            <div style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:rgba(20,21,15,0.55); margin-top:4px;">#F2EFE9</div>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(20,21,15,0.16);">
+          <div style="height:120px; background:#C9D4D2;"></div>
+          <div style="padding:16px 18px;">
+            <div style="font-size:15px; font-weight:700; letter-spacing:-0.01em;">Glacier</div>
+            <div style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:rgba(20,21,15,0.55); margin-top:4px;">#C9D4D2</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px;">
+        <div style="border:1px solid rgba(20,21,15,0.16); padding:32px 36px;">
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Display — Archivo Black / 900</div>
+          <div style="font-size:52px; font-weight:900; letter-spacing:-0.045em; margin-top:14px;">AaBbCc 0123</div>
+        </div>
+        <div style="border:1px solid rgba(20,21,15,0.16); padding:32px 36px;">
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Data — IBM Plex Mono / 400</div>
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:40px; margin-top:16px;">AaBbCc 0123</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section id="contact" style="background:#14150F; color:#F2EFE9; padding:130px 0;">
     <div style="max-width:1440px; margin:0 auto; padding:0 40px; display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:72px; align-items:end;">
       <h2 style="margin:0; font-size:clamp(38px,5.6vw,84px); font-weight:900; letter-spacing:-0.045em; line-height:0.98;">Fly your first route with us.</h2>
       <div>
         <p style="margin:0 0 28px; font-size:18px; line-height:1.6; color:rgba(242,239,233,0.7);">For health authorities, First Nations health partners, labs and pharmacies.</p>
-        <a href="mailto:fly@milkrun.ca" style="display:inline-flex; align-items:center; gap:12px; background:#E2571E; color:#FBFAF7; padding:18px 30px; border-radius:100px; font-size:15px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;" style-hover="background:#F2EFE9; color:#14150F;">fly@milkrun.ca</a>
+        <a href="mailto:fly@milkrun.ca" class="mr-cta-solid" style="display:inline-flex; align-items:center; gap:12px; background:#E2571E; color:#FBFAF7; padding:18px 30px; border-radius:100px; font-size:15px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">fly@milkrun.ca</a>
       </div>
     </div>
   </section>
@@ -242,163 +314,108 @@
   </footer>
 </div>
 
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#E2571E&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#E2571E&quot;,&quot;#1B45D8&quot;,&quot;#0E7A5F&quot;,&quot;#D9A400&quot;]},&quot;showBrandKit&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
-class Component extends DCLogic {
-  canvasRef = React.createRef();
-  hudRef = React.createRef();
+<script>
+(function () {
+  var cv = document.getElementById("mr-hero");
+  if (!cv) return;
+  var ctx = cv.getContext("2d");
+  var accent = "#E2571E";
+  var w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-  componentDidMount() {
-    const cv = this.canvasRef.current;
-    if (!cv) return;
-    const ctx = cv.getContext("2d");
-    const accent = this.props.accent ?? "#E2571E";
-    let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function resize() {
+    var r = cv.getBoundingClientRect();
+    w = Math.max(320, r.width); h = Math.max(240, r.height);
+    cv.width = w * dpr; cv.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener("resize", resize);
 
-    const resize = () => {
-      const r = cv.getBoundingClientRect();
-      w = Math.max(320, r.width); h = Math.max(240, r.height);
-      cv.width = w * dpr; cv.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-    resize();
-    this._onResize = resize;
-    window.addEventListener("resize", resize);
-
-    // procedural ridgeline: sum of sines, seeded per layer
-    const ridge = (x, seed, amp, freq) =>
-      Math.sin(x * freq + seed) * amp +
+  // procedural ridgeline: sum of sines, seeded per layer
+  function ridge(x, seed, amp, freq) {
+    return Math.sin(x * freq + seed) * amp +
       Math.sin(x * freq * 2.3 + seed * 1.7) * amp * 0.45 +
       Math.sin(x * freq * 5.1 + seed * 3.1) * amp * 0.18;
+  }
 
-    const layers = [
-      { seed: 1.2, amp: 0.10, freq: 0.0042, speed: 3,  base: 0.66, fill: "#2E3630" },
-      { seed: 4.7, amp: 0.13, freq: 0.0055, speed: 7,  base: 0.76, fill: "#232823" },
-      { seed: 9.1, amp: 0.16, freq: 0.0071, speed: 14, base: 0.88, fill: "#181B17" },
-      { seed: 2.4, amp: 0.20, freq: 0.0098, speed: 26, base: 1.04, fill: "#0E0F0C" }
-    ];
+  var layers = [
+    { seed: 1.2, amp: 0.10, freq: 0.0042, speed: 3,  base: 0.66, fill: "#2E3630" },
+    { seed: 4.7, amp: 0.13, freq: 0.0055, speed: 7,  base: 0.76, fill: "#232823" },
+    { seed: 9.1, amp: 0.16, freq: 0.0071, speed: 14, base: 0.88, fill: "#181B17" },
+    { seed: 2.4, amp: 0.20, freq: 0.0098, speed: 26, base: 1.04, fill: "#0E0F0C" }
+  ];
 
-    const flakes = Array.from({ length: 70 }, () => ({
-      x: Math.random(), y: Math.random(), s: 0.3 + Math.random() * 0.9, d: Math.random() * 6.28
-    }));
+  var flakes = [];
+  for (var i = 0; i < 70; i++) {
+    flakes.push({ x: Math.random(), y: Math.random(), s: 0.3 + Math.random() * 0.9, d: Math.random() * 6.28 });
+  }
 
-    let t0 = null, raf;
+  var t0 = null;
 
-    const draw = (now) => {
-      if (t0 === null) t0 = now;
-      const t = Math.max(0, (now - t0) / 1000);
-      try {
+  function draw(now) {
+    if (t0 === null) t0 = now;
+    var t = Math.max(0, (now - t0) / 1000);
+    try {
 
-      // sky
-      const sky = ctx.createLinearGradient(0, 0, 0, h);
-      sky.addColorStop(0, "#0A0B08");
-      sky.addColorStop(0.55, "#141610");
-      sky.addColorStop(1, "#241A12");
-      ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h);
+    // sky
+    var sky = ctx.createLinearGradient(0, 0, 0, h);
+    sky.addColorStop(0, "#0A0B08");
+    sky.addColorStop(0.55, "#141610");
+    sky.addColorStop(1, "#241A12");
+    ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h);
 
-      // horizon glow
-      const glow = ctx.createRadialGradient(w * 0.72, h * 0.74, 0, w * 0.72, h * 0.74, h * 0.9);
-      glow.addColorStop(0, accent + "44");
-      glow.addColorStop(1, "transparent");
-      ctx.fillStyle = glow; ctx.fillRect(0, 0, w, h);
+    // horizon glow
+    var glow = ctx.createRadialGradient(w * 0.72, h * 0.74, 0, w * 0.72, h * 0.74, h * 0.9);
+    glow.addColorStop(0, accent + "44");
+    glow.addColorStop(1, "transparent");
+    ctx.fillStyle = glow; ctx.fillRect(0, 0, w, h);
 
-      // stars
-      ctx.fillStyle = "rgba(242,239,233,0.5)";
-      for (let i = 0; i < 40; i++) {
-        const sx = ((i * 97.3) % w), sy = ((i * 53.7) % (h * 0.42));
-        const tw = 0.35 + 0.35 * Math.sin(t * 1.6 + i);
-        ctx.globalAlpha = tw * 0.5;
-        ctx.fillRect(sx, sy, 1.4, 1.4);
+    // stars
+    ctx.fillStyle = "rgba(242,239,233,0.5)";
+    for (var i = 0; i < 40; i++) {
+      var sx = ((i * 97.3) % w), sy = ((i * 53.7) % (h * 0.42));
+      var tw = 0.35 + 0.35 * Math.sin(t * 1.6 + i);
+      ctx.globalAlpha = tw * 0.5;
+      ctx.fillRect(sx, sy, 1.4, 1.4);
+    }
+    ctx.globalAlpha = 1;
+
+    // ridges
+    layers.forEach(function (L) {
+      var off = t * L.speed;
+      ctx.beginPath();
+      ctx.moveTo(0, h);
+      for (var x = 0; x <= w; x += 4) {
+        var y = h * L.base - h * ridge(x + off, L.seed, L.amp, L.freq) - h * 0.18;
+        ctx.lineTo(x, y);
       }
-      ctx.globalAlpha = 1;
+      ctx.lineTo(w, h); ctx.closePath();
+      ctx.fillStyle = L.fill; ctx.fill();
+      // snow line highlight
+      ctx.beginPath();
+      for (var x2 = 0; x2 <= w; x2 += 4) {
+        var y2 = h * L.base - h * ridge(x2 + off, L.seed, L.amp, L.freq) - h * 0.18;
+        x2 === 0 ? ctx.moveTo(x2, y2) : ctx.lineTo(x2, y2);
+      }
+      ctx.strokeStyle = "rgba(201,212,210,0.22)"; ctx.lineWidth = 1.2; ctx.stroke();
+    });
 
-      // ridges
-      layers.forEach((L) => {
-        const off = t * L.speed;
-        ctx.beginPath();
-        ctx.moveTo(0, h);
-        for (let x = 0; x <= w; x += 4) {
-          const y = h * L.base - h * ridge(x + off, L.seed, L.amp, L.freq) - h * 0.18;
-          ctx.lineTo(x, y);
-        }
-        ctx.lineTo(w, h); ctx.closePath();
-        ctx.fillStyle = L.fill; ctx.fill();
-        // snow line highlight
-        ctx.beginPath();
-        for (let x = 0; x <= w; x += 4) {
-          const y = h * L.base - h * ridge(x + off, L.seed, L.amp, L.freq) - h * 0.18;
-          x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-        }
-        ctx.strokeStyle = "rgba(201,212,210,0.22)"; ctx.lineWidth = 1.2; ctx.stroke();
-      });
+    // drifting snow
+    ctx.fillStyle = "rgba(242,239,233,0.35)";
+    flakes.forEach(function (f) {
+      var fx = ((f.x * w) + t * (8 + f.s * 22)) % (w + 20) - 10;
+      var fy = ((f.y * h) + t * (10 + f.s * 16) + Math.sin(t + f.d) * 8) % h;
+      ctx.globalAlpha = 0.18 + f.s * 0.22;
+      ctx.fillRect(fx, fy, f.s * 1.7, f.s * 1.7);
+    });
+    ctx.globalAlpha = 1;
 
-      // drifting snow
-      ctx.fillStyle = "rgba(242,239,233,0.35)";
-      flakes.forEach((f) => {
-        const fx = ((f.x * w) + t * (8 + f.s * 22)) % (w + 20) - 10;
-        const fy = ((f.y * h) + t * (10 + f.s * 16) + Math.sin(t + f.d) * 8) % h;
-        ctx.globalAlpha = 0.18 + f.s * 0.22;
-        ctx.fillRect(fx, fy, f.s * 1.7, f.s * 1.7);
-      });
-      ctx.globalAlpha = 1;
+    } catch (e) { /* keep the loop alive */ }
 
-      } catch (e) { /* keep the loop alive */ }
-
-      raf = requestAnimationFrame(draw);
-    };
-    raf = requestAnimationFrame(draw);
-    this._raf = () => cancelAnimationFrame(raf);
+    requestAnimationFrame(draw);
   }
-
-  componentWillUnmount() {
-    if (this._raf) this._raf();
-    if (this._onResize) window.removeEventListener("resize", this._onResize);
-  }
-
-  renderVals() {
-    const accent = this.props.accent ?? "#E2571E";
-    return {
-      canvasRef: this.canvasRef,
-      hudRef: this.hudRef,
-      showBrandKit: this.props.showBrandKit ?? true,
-      stats: [
-        { value: "7", label: "Communities served" },
-        { value: "4.5 kg", label: "Cold-chain payload" },
-        { value: "180 km", label: "Range per run" },
-        { value: "24 min", label: "Median door to door" }
-      ],
-      payloads: [
-        { no: "01", title: "Medicines", body: "Pharmacy resupply and urgent single doses." },
-        { no: "02", title: "Blood & plasma", body: "Kept cold and temperature-logged the whole way." },
-        { no: "03", title: "Lab samples", body: "Flown out same day, results back same day." },
-        { no: "04", title: "Emergency kits", body: "Naloxone, epinephrine, trauma supplies on demand." }
-      ],
-      routes: [
-        { leg: "Mount Currie → Skatin", time: "19 min" },
-        { leg: "Mount Currie → Samahquam", time: "16 min" },
-        { leg: "Mount Currie → Port Douglas", time: "27 min" },
-        { leg: "Mount Currie → N'Quatqua (D'Arcy)", time: "12 min" },
-        { leg: "Mount Currie → Pemberton Health Centre", time: "6 min" }
-      ],
-      specs: [
-        { value: "VTOL", label: "No runway needed", body: "Lifts straight up off a 3 m painted circle." },
-        { value: "All-weather", label: "Built for the range", body: "Flies through icing, gusts and valley fog." },
-        { value: "BVLOS", label: "Fully autonomous", body: "Approved by Transport Canada, watched from the ground." }
-      ],
-      steps: [
-        { no: "01", title: "Packed", body: "A clinician seals the cooled box and scans it." },
-        { no: "02", title: "Flown", body: "The drone flies itself, tracked the whole way." },
-        { no: "03", title: "Delivered", body: "It lands on the pad and unlocks by code." }
-      ],
-      palette: [
-        { name: "Signal", hex: accent },
-        { name: "Ink", hex: "#14150F" },
-        { name: "Paper", hex: "#F2EFE9" },
-        { name: "Glacier", hex: "#C9D4D2" }
-      ]
-    };
-  }
-}
+  requestAnimationFrame(draw);
+})();
 </script>
 </body>
 </html>
