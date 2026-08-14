@@ -33,7 +33,13 @@
      Every line is in the DOM from the first byte — this only animates it — and
      the script forces the reveal if the video is blocked, slow, or unwanted,
      so the headline is never gated on a video that may never play. ---- */
-  .mr-hero-video  { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+  /* The film is unobstructed while it runs. Once the type lands, the held frame
+     drifts up and in so the aircraft clears the headline instead of sitting
+     behind it — the subject is centred in frame and the copy is bottom-anchored,
+     so without this they occupy the same band. */
+  .mr-hero-video  { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;
+                    transition:transform 3.4s cubic-bezier(.25,.5,.2,1); }
+  .is-revealed .mr-hero-video { transform:scale(1.16) translateY(-8%); }
   .mr-reveal      { opacity:0; transform:translateY(18px);
                     transition:opacity 1s cubic-bezier(.2,.65,.25,1), transform 1s cubic-bezier(.2,.65,.25,1); }
   .is-revealed .mr-reveal { opacity:1; transform:none; }
@@ -46,9 +52,11 @@
   .is-revealed .mr-hero-scrim-text { opacity:1; }
 
   @media (prefers-reduced-motion: reduce) {
-    html          { scroll-behavior:auto; }
-    .mr-reveal    { transition:none; }
+    html           { scroll-behavior:auto; }
+    .mr-reveal     { transition:none; }
     .mr-hero-scrim { transition:none; }
+    .mr-hero-video { transition:none; }
+    .is-revealed .mr-hero-video { transform:none; }
   }
 
   /* ---- Responsive. Base layout is the 1440px design; these only narrow it.
@@ -86,16 +94,13 @@
 
     .mr-hero          { min-height:0 !important; }
     .mr-hero-top      { min-height:56px !important; }
-    .mr-hero-body     { padding:44px 20px 36px !important; }
+    .mr-hero-body     { padding:44px 20px 52px !important; }
     .mr-hero-actions  { gap:26px !important; }
     .mr-hero-buttons  { width:100% !important; }
     .mr-hero-buttons a { flex:1 1 auto !important; text-align:center !important; padding:15px 14px !important; font-size:12.5px !important; }
 
-    .mr-stats         { grid-template-columns:repeat(2, 1fr) !important; }
-    .mr-stat          { padding:18px 16px 18px 0 !important; }
-    .mr-stat:nth-child(even)   { border-right:0 !important; }
-    .mr-stat:nth-child(-n+2)   { border-bottom:1px solid rgba(242,239,233,0.16) !important; }
-    .mr-stat-value    { font-size:24px !important; }
+    .mr-hero-tag      { padding:12px 20px !important; font-size:8.5px !important; letter-spacing:0.12em !important; }
+    .mr-hero-eyebrow  { font-size:10px !important; letter-spacing:0.13em !important; margin-bottom:20px !important; }
 
     .mr-section-head  { flex-direction:column !important; align-items:flex-start !important; gap:12px !important; }
     .mr-scope-row     { flex-direction:column !important; gap:7px !important; }
@@ -136,56 +141,32 @@
   </header>
 
   <!-- ============================ HERO ============================ -->
-  <section id="top" class="mr-hero" style="position:relative; min-height:88vh; display:flex; flex-direction:column; justify-content:space-between; padding:0; background:#14150F; color:#F2EFE9; overflow:hidden;">
+  <section id="top" class="mr-hero" style="position:relative; min-height:100vh; display:flex; flex-direction:column; justify-content:space-between; padding:0; background:#14150F; color:#F2EFE9; overflow:hidden;">
     <canvas id="mr-hero" style="position:absolute; inset:0; width:100%; height:100%; display:block;"></canvas>
     <video id="mr-hero-video" class="mr-hero-video" autoplay muted playsinline preload="auto" poster="hero-poster.jpg" aria-hidden="true" tabindex="-1">
       <source src="hero.mp4" type="video/mp4" media="(min-width: 801px)">
       <source src="hero-720.mp4" type="video/mp4">
     </video>
     <div class="mr-hero-scrim" style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,11,8,0.94) 0%, rgba(10,11,8,0.55) 38%, rgba(10,11,8,0.12) 70%, rgba(10,11,8,0.5) 100%);"></div>
-    <div class="mr-hero-scrim-text" style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,11,8,0.9) 0%, rgba(10,11,8,0.66) 42%, rgba(10,11,8,0.4) 72%, rgba(10,11,8,0.34) 100%);"></div>
-    <div style="position:absolute; inset:0; background-image:repeating-linear-gradient(115deg, rgba(242,239,233,0.05) 0 1px, transparent 1px 26px);"></div>
+    <div class="mr-hero-scrim-text" style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,11,8,0.93) 0%, rgba(10,11,8,0.8) 28%, rgba(10,11,8,0.46) 54%, rgba(10,11,8,0.18) 78%, rgba(10,11,8,0.14) 100%);"></div>
+
+    <p class="mr-hero-tag" style="position:absolute; top:0; right:0; margin:0; padding:18px 40px; z-index:2; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(242,239,233,0.62); text-shadow:0 1px 10px rgba(10,11,8,0.9);">Concept AI visualization</p>
 
     <div class="mr-hero-top" style="position:relative; flex:1 1 auto; min-height:110px;"></div>
 
-    <div class="mr-hero-body" style="position:relative; max-width:1440px; width:100%; margin:0 auto; padding:24px 40px 52px;">
-      <p class="mr-reveal" style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:#E2571E; margin:0 0 28px;">Proposal · British Columbia</p>
-      <h1 class="mr-reveal" style="transition-delay:.12s; margin:0; font-size:clamp(36px, 6.2vw, 96px); line-height:0.94; font-weight:900; letter-spacing:-0.045em; max-width:17ch; text-wrap:balance;">Medicine to the community, not another trip to town.</h1>
+    <div class="mr-hero-body" style="position:relative; max-width:1440px; width:100%; margin:0 auto; padding:24px 40px 76px;">
+      <p class="mr-reveal mr-hero-eyebrow" style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:#E2571E; margin:0 0 28px;">Healthcare logistics · British Columbia</p>
+      <h1 class="mr-reveal" style="transition-delay:.12s; margin:0; font-size:clamp(36px, 6.2vw, 96px); line-height:0.94; font-weight:900; letter-spacing:-0.045em; max-width:17ch; text-wrap:balance;">Medication over the mountains, in minutes.</h1>
       <div class="mr-hero-actions" style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:40px; margin-top:40px;">
-        <div class="mr-reveal" style="transition-delay:.3s; max-width:56ch;">
-          <p style="margin:0; font-size:19px; line-height:1.5; color:rgba(242,239,233,0.82);">MILKRUN is developing an on-demand drone logistics service for remote communities in British Columbia.</p>
-          <p style="margin:16px 0 0; font-size:16px; line-height:1.6; color:rgba(242,239,233,0.62);">The first use case is simple: when a patient is prescribed medication during a community clinic, deliver the prescription from the Pemberton area to the community instead of requiring the patient or their family to make another trip into town.</p>
+        <div class="mr-reveal" style="transition-delay:.3s; max-width:48ch;">
+          <p style="margin:0; font-size:19px; line-height:1.5; color:rgba(242,239,233,0.82);">MILKRUN is developing on-demand drone delivery for rural and remote healthcare.</p>
         </div>
         <div class="mr-hero-buttons mr-reveal" style="transition-delay:.42s; display:flex; gap:12px;">
           <a href="#pilot" class="mr-cta-solid" style="background:#E2571E; color:#FBFAF7; padding:16px 28px; border-radius:100px; font-size:14px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">Explore the pilot</a>
           <a href="#partner" class="mr-cta-ghost" style="border:1px solid rgba(242,239,233,0.35); padding:16px 28px; border-radius:100px; font-size:14px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">Partner with us</a>
         </div>
       </div>
-      <p class="mr-reveal" style="transition-delay:.52s; margin:30px 0 0; font-family:'IBM Plex Mono', monospace; font-size:11px; line-height:1.6; letter-spacing:0.1em; text-transform:uppercase; color:rgba(242,239,233,0.45);">Concept visualisation. Feasibility-stage project — no MILKRUN routes are currently operational.</p>
-    </div>
-
-    <div class="mr-reveal" style="transition-delay:.62s; position:relative; border-top:1px solid rgba(242,239,233,0.16); background:rgba(20,21,15,0.5);">
-      <div class="mr-inner" style="max-width:1440px; margin:0 auto; padding:0 40px;">
-        <div class="mr-stats" style="display:grid; grid-template-columns:repeat(4, 1fr);">
-          <div class="mr-stat" style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
-            <div class="mr-stat-value" style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">1</div>
-            <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Route first</div>
-          </div>
-          <div class="mr-stat" style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
-            <div class="mr-stat-value" style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">4</div>
-            <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Candidate communities</div>
-          </div>
-          <div class="mr-stat" style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
-            <div class="mr-stat-value" style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">Same day</div>
-            <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Initial delivery target</div>
-          </div>
-          <div class="mr-stat" style="padding:26px 24px 26px 0;">
-            <div class="mr-stat-value" style="font-size:34px; font-weight:800; letter-spacing:-0.03em;">BC</div>
-            <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(242,239,233,0.6); margin-top:6px;">Built locally</div>
-          </div>
-        </div>
-        <p style="margin:0; padding:0 0 22px; font-family:'IBM Plex Mono', monospace; font-size:11px; line-height:1.6; letter-spacing:0.06em; color:rgba(242,239,233,0.42);">Initial feasibility work is focused on N&rsquo;Quatqua, Samahquam, Skatin and Xa&rsquo;xtsa in the Southern Stl&rsquo;atl&rsquo;imx region.</p>
-      </div>
+      <p class="mr-reveal" style="transition-delay:.52s; margin:30px 0 0; font-family:'IBM Plex Mono', monospace; font-size:11px; line-height:1.6; letter-spacing:0.1em; text-transform:uppercase; color:rgba(242,239,233,0.45);">Feasibility-stage project. No MILKRUN routes are currently operational.</p>
     </div>
   </section>
 
