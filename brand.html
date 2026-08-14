@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>MILKRUN — brand system (internal)</title>
+<meta name="description" content="Internal reference for the MILKRUN identity system. Not linked from the public site.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#FBFAF7; }
+  html { -webkit-text-size-adjust:100%; }
+  * { box-sizing: border-box; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: #E2571E; }
+  ::selection { background:#E2571E; color:#FBFAF7; }
+
+  @media (max-width: 1024px) {
+    .mr-inner       { padding-left:28px !important; padding-right:28px !important; }
+    .mr-band        { padding:80px 0 !important; }
+    .mr-brand-grid  { grid-template-columns:1fr !important; }
+    .mr-brand-marks > div { min-height:140px !important; }
+  }
+  @media (max-width: 700px) {
+    .mr-inner         { padding-left:20px !important; padding-right:20px !important; }
+    .mr-band          { padding:56px 0 !important; }
+    .mr-section-head  { flex-direction:column !important; align-items:flex-start !important; gap:12px !important; }
+    .mr-brand-lockup  { padding:40px 24px !important; gap:28px !important; }
+    .mr-lockup-mark   { width:38px !important; height:38px !important; border-width:9px !important; }
+    .mr-lockup-word   { font-size:38px !important; }
+    .mr-mark-word     { font-size:28px !important; }
+    .mr-mark-dot      { width:26px !important; height:26px !important; border-width:6px !important; }
+    .mr-palette       { grid-template-columns:repeat(2, 1fr) !important; gap:16px !important; }
+    .mr-palette-chip  { height:88px !important; }
+    .mr-type          { grid-template-columns:1fr !important; }
+    .mr-type-sample   { font-size:38px !important; }
+    .mr-type-sample-mono { font-size:30px !important; }
+  }
+</style>
+</head>
+<body>
+<div style="background:#FBFAF7; color:#14150F; font-family:Archivo, Helvetica, Arial, sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden;">
+
+  <section class="mr-band" style="padding:90px 0 110px;">
+    <div class="mr-inner" style="max-width:1440px; margin:0 auto; padding:0 40px;">
+      <p style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#E2571E; margin:0 0 32px;">Internal reference · not part of the public site · <a href="index.html">back to milkrun.ca</a></p>
+
+      <div class="mr-section-head" style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; margin-bottom:56px;">
+        <h1 style="margin:0; font-size:clamp(28px,3.4vw,48px); font-weight:900; letter-spacing:-0.04em;">The mark</h1>
+        <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Identity system v1</span>
+      </div>
+
+      <div class="mr-brand-grid" style="display:grid; grid-template-columns:1.4fr 1fr; gap:24px;">
+        <div class="mr-brand-lockup" style="border:1px solid rgba(20,21,15,0.16); padding:72px 48px; display:flex; flex-direction:column; gap:36px; justify-content:center;">
+          <div style="display:flex; align-items:center; gap:20px;">
+            <span class="mr-lockup-mark" style="width:56px; height:56px; border-radius:50%; border:13px solid #E2571E; display:block;"></span>
+            <span class="mr-lockup-word" style="font-size:64px; font-weight:900; letter-spacing:-0.05em; line-height:1;">MILKRUN</span>
+          </div>
+          <div style="height:1px; background:rgba(20,21,15,0.14);"></div>
+          <div style="display:flex; align-items:center; gap:16px;">
+            <span style="width:30px; height:30px; border-radius:50%; border:7px solid #14150F; display:block;"></span>
+            <div>
+              <div style="font-size:32px; font-weight:900; letter-spacing:-0.05em; line-height:1;">MILKRUN</div>
+              <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.28em; text-transform:uppercase; margin-top:6px; color:rgba(20,21,15,0.6);">Healthcare logistics, by air</div>
+            </div>
+          </div>
+        </div>
+        <div class="mr-brand-marks" style="display:grid; grid-template-rows:1fr 1fr; gap:24px;">
+          <div style="background:#14150F; display:flex; align-items:center; justify-content:center; gap:14px;">
+            <span class="mr-mark-dot" style="width:34px; height:34px; border-radius:50%; border:8px solid #E2571E; display:block;"></span>
+            <span class="mr-mark-word" style="font-size:38px; font-weight:900; letter-spacing:-0.05em; color:#F2EFE9;">MILKRUN</span>
+          </div>
+          <div style="background:#E2571E; display:flex; align-items:center; justify-content:center; gap:14px;">
+            <span class="mr-mark-dot" style="width:34px; height:34px; border-radius:50%; border:8px solid #14150F; display:block;"></span>
+            <span class="mr-mark-word" style="font-size:38px; font-weight:900; letter-spacing:-0.05em; color:#14150F;">MILKRUN</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mr-palette" style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:24px;">
+        <div style="border:1px solid rgba(20,21,15,0.16);">
+          <div class="mr-palette-chip" style="height:120px; background:#E2571E;"></div>
+          <div style="padding:16px 18px;">
+            <div style="font-size:15px; font-weight:700; letter-spacing:-0.01em;">Signal</div>
+            <div style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:rgba(20,21,15,0.55); margin-top:4px;">#E2571E</div>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(20,21,15,0.16);">
+          <div class="mr-palette-chip" style="height:120px; background:#14150F;"></div>
+          <div style="padding:16px 18px;">
+            <div style="font-size:15px; font-weight:700; letter-spacing:-0.01em;">Ink</div>
+            <div style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:rgba(20,21,15,0.55); margin-top:4px;">#14150F</div>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(20,21,15,0.16);">
+          <div class="mr-palette-chip" style="height:120px; background:#F2EFE9;"></div>
+          <div style="padding:16px 18px;">
+            <div style="font-size:15px; font-weight:700; letter-spacing:-0.01em;">Paper</div>
+            <div style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:rgba(20,21,15,0.55); margin-top:4px;">#F2EFE9</div>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(20,21,15,0.16);">
+          <div class="mr-palette-chip" style="height:120px; background:#C9D4D2;"></div>
+          <div style="padding:16px 18px;">
+            <div style="font-size:15px; font-weight:700; letter-spacing:-0.01em;">Glacier</div>
+            <div style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:rgba(20,21,15,0.55); margin-top:4px;">#C9D4D2</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mr-type" style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px;">
+        <div style="border:1px solid rgba(20,21,15,0.16); padding:32px 36px;">
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Display — Archivo Black / 900</div>
+          <div class="mr-type-sample" style="font-size:52px; font-weight:900; letter-spacing:-0.045em; margin-top:14px;">AaBbCc 0123</div>
+        </div>
+        <div style="border:1px solid rgba(20,21,15,0.16); padding:32px 36px;">
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Data — IBM Plex Mono / 400</div>
+          <div class="mr-type-sample-mono" style="font-family:'IBM Plex Mono', monospace; font-size:40px; margin-top:16px;">AaBbCc 0123</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

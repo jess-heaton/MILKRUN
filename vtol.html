@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MILKRUN VTOL</title>
+<title>Illustrative aircraft concept — final platform not selected</title>
 <script type="importmap">
 {
   "imports": {
@@ -33,6 +33,10 @@
 <script type="module">
   const stage = document.querySelector('three-d-stage');
   const { THREE } = await stage.ready;
+
+  // The component's export toolbar and its own hint line are authoring aids —
+  // the public page frames this as an illustrative concept and captions it itself.
+  stage.shadowRoot.querySelectorAll('.toolbar, .note').forEach((el) => { el.style.display = 'none'; });
 
   /* ---------- environment: procedural equirect sky for real specular ---------- */
   const envCanvas = document.createElement('canvas');
@@ -88,7 +92,7 @@
   [M.shell, M.accent, M.carbon].forEach((m) => { m.side = THREE.DoubleSide; });
 
   const model = new THREE.Group();
-  model.name = 'milkrun_mr1';
+  model.name = 'vtol_concept';
   const add = (geo, mat, name, parent) => {
     const m = new THREE.Mesh(geo, mat);
     m.name = name; m.castShadow = true; m.receiveShadow = true;
