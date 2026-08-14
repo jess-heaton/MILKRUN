@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MILKRUN</title>
-<meta name="description" content="MILKRUN is a feasibility-stage proposal for an on-demand drone logistics service in British Columbia — flying prescriptions from a Pemberton-area pharmacy to remote communities instead of requiring another trip into town.">
+<meta name="description" content="MILKRUN is developing on-demand drone delivery for rural, remote and Indigenous communities in British Columbia — flying prescriptions the final leg so patients and families don't have to make the trip.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="favicon-192.png" sizes="192x192" type="image/png">
@@ -27,7 +27,7 @@
   .mr-cta-solid:hover   { background:#F2EFE9 !important; color:#14150F !important; }
   .mr-cta-ghost:hover   { border-color:#F2EFE9 !important; color:#F2EFE9 !important; }
   .mr-card:hover        { background:#1D1E16 !important; }
-  .mr-extlink:hover     { border-bottom-color:#E2571E !important; }
+  .mr-cta-dark:hover    { background:#E2571E !important; color:#FBFAF7 !important; }
 
   /* ---- Hero: the film plays, then the copy arrives.
      Every line is in the DOM from the first byte — this only animates it — and
@@ -68,8 +68,11 @@
     .mr-band          { padding:80px 0 !important; }
     .mr-problem       { grid-template-columns:1fr !important; gap:20px !important; }
     .mr-pilot-grid    { grid-template-columns:1fr !important; gap:56px !important; }
-    .mr-steps         { grid-template-columns:repeat(2, 1fr) !important; gap:1px !important; }
+    .mr-steps         { grid-template-columns:repeat(2, 1fr) !important; gap:40px !important; }
     .mr-carry         { grid-template-columns:1fr !important; }
+    .mr-statwall      { grid-template-columns:1fr !important; }
+    .mr-statwall > div { padding:30px 0 !important; }
+    .mr-statfacts     { grid-template-columns:1fr !important; gap:32px !important; }
     .mr-community     { grid-template-columns:1fr !important; gap:44px !important; }
     .mr-criteria      { grid-template-columns:repeat(2, 1fr) !important; }
     .mr-work          { grid-template-columns:repeat(2, 1fr) !important; }
@@ -113,7 +116,8 @@
     .mr-section-head  { flex-direction:column !important; align-items:flex-start !important; gap:12px !important; }
     .mr-scope-row     { flex-direction:column !important; gap:7px !important; }
     .mr-scope-key     { flex:0 0 auto !important; }
-    .mr-steps         { grid-template-columns:1fr !important; }
+    .mr-steps         { grid-template-columns:1fr !important; gap:32px !important; }
+    .mr-statnum       { font-size:60px !important; }
     /* "Communications" set at 30px is wider than a 320px column, and a grid
        track cannot shrink below its min-content — it dragged the whole row
        past the viewport edge. */
@@ -144,11 +148,11 @@
       </a>
       <nav class="mr-nav" style="display:flex; align-items:center; gap:28px; font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;">
         <a href="#problem">Problem</a>
-        <a href="#pilot">Pilot</a>
+        <a href="#payload">Payload</a>
         <a href="#how">How it works</a>
         <a href="#community">Community</a>
-        <a href="#aircraft">Aircraft</a>
-        <a href="#partner" class="mr-nav-cta" style="background:#14150F; color:#F2EFE9; padding:11px 20px; border-radius:100px;">Partner</a>
+        <a href="#partner">Partner</a>
+        <a href="mailto:jessica@milkrun.ca" class="mr-nav-cta" style="background:#14150F; color:#F2EFE9; padding:11px 20px; border-radius:100px;">Get in touch</a>
       </nav>
     </div>
   </header>
@@ -172,7 +176,7 @@
       <h1 class="mr-reveal" style="transition-delay:.12s; margin:0; font-size:clamp(36px, 6.2vw, 96px); line-height:0.94; font-weight:900; letter-spacing:-0.045em; max-width:17ch; text-wrap:balance;">Medication over the mountains, in minutes.</h1>
       <div class="mr-hero-actions" style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:40px; margin-top:40px;">
         <div class="mr-reveal" style="transition-delay:.3s; max-width:48ch;">
-          <p style="margin:0; font-size:19px; line-height:1.5; color:rgba(242,239,233,0.82);">MILKRUN is developing on-demand drone delivery for rural and remote healthcare.</p>
+          <p style="margin:0; font-size:19px; line-height:1.5; color:rgba(242,239,233,0.82);">Developing on-demand drone delivery for rural, remote and Indigenous communities.</p>
         </div>
         <div class="mr-hero-buttons mr-reveal" style="transition-delay:.42s; display:flex; gap:12px;">
           <a href="#pilot" class="mr-cta-solid" style="background:#E2571E; color:#FBFAF7; padding:16px 28px; border-radius:100px; font-size:14px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">Explore the pilot</a>
@@ -183,17 +187,91 @@
     </div>
   </section>
 
-  <!-- ============================ PROBLEM ============================ -->
+  <!-- ============================ PANEL 1 · PROBLEM ============================ -->
   <section id="problem" class="mr-section mr-problem" style="max-width:1440px; margin:0 auto; padding:120px 40px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.25fr); gap:80px; align-items:start;">
     <h2 style="margin:0; font-size:14px; font-family:'IBM Plex Mono', monospace; letter-spacing:0.18em; text-transform:uppercase; color:#E2571E;">The problem</h2>
     <div>
-      <p style="margin:0; font-size:clamp(24px, 3vw, 42px); line-height:1.22; font-weight:600; letter-spacing:-0.025em; text-wrap:pretty;">Primary care can reach the community. The medication still has to come from town.</p>
-      <div style="margin-top:40px; display:flex; flex-direction:column; gap:20px; max-width:58ch; font-size:17px; line-height:1.65; color:rgba(20,21,15,0.7);">
-        <p style="margin:0;">Doctors and nurses are increasingly providing care directly in remote communities around Pemberton and Mount Currie.</p>
-        <p style="margin:0;">But when a prescription is issued during a community visit, the medication is still prepared by a pharmacy in Pemberton. The patient is contacted when it is ready. From there, the patient or their family has to arrange the trip into town to collect it.</p>
-        <p style="margin:0;">For ordinary prescriptions this is inconvenient. For something like an antibiotic that should be started within hours, it can become a genuine access problem.</p>
+      <p style="margin:0; font-size:clamp(26px, 3.2vw, 46px); line-height:1.18; font-weight:800; letter-spacing:-0.03em; text-wrap:pretty;">The appointment is local. The medication isn&rsquo;t.</p>
+      <div style="margin-top:40px; display:flex; flex-direction:column; gap:22px; max-width:52ch; font-size:18px; line-height:1.6; color:rgba(20,21,15,0.7);">
+        <p style="margin:0;">Rural healthcare is delivered close to home.</p>
+        <p style="margin:0;">But when a prescription is filled elsewhere, <strong style="color:#14150F; font-weight:700;">the responsibility shifts back to the patient or their family to travel and retrieve it.</strong></p>
+        <p style="margin:0;">A small package becomes a long trip.</p>
       </div>
-      <p style="margin:36px 0 0; padding-top:26px; border-top:2px solid #14150F; font-size:20px; line-height:1.45; font-weight:700; letter-spacing:-0.02em; max-width:34ch;">MILKRUN is being developed to provide that missing logistics leg.</p>
+      <p style="margin:40px 0 0; padding-top:26px; border-top:2px solid #14150F; font-size:clamp(20px,2vw,26px); line-height:1.35; font-weight:800; letter-spacing:-0.025em;">MILKRUN is for that final leg.</p>
+    </div>
+  </section>
+
+  <!-- ============================ PANEL 2 · PAYLOAD ============================ -->
+  <section id="payload" class="mr-band" style="background:#14150F; color:#F2EFE9; padding:110px 0;">
+    <div class="mr-inner" style="max-width:1440px; margin:0 auto; padding:0 40px;">
+      <p style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#E2571E; margin:0 0 22px;">The payload</p>
+      <h2 style="margin:0 0 56px; font-size:clamp(30px,4.4vw,64px); font-weight:900; letter-spacing:-0.04em; max-width:16ch;">Small things worth a long drive.</h2>
+      <div class="mr-carry" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:1px; background:rgba(242,239,233,0.2); border-top:1px solid rgba(242,239,233,0.2); border-bottom:1px solid rgba(242,239,233,0.2);">
+        <div class="mr-card" style="background:#14150F; padding:42px 32px 48px; display:flex; flex-direction:column; gap:14px;">
+          <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#E2571E;">Prescriptions</span>
+          <h3 style="margin:0; font-size:clamp(26px,2.6vw,34px); font-weight:900; letter-spacing:-0.035em;">First</h3>
+          <p style="margin:0; max-width:34ch; font-size:17px; line-height:1.55; color:rgba(242,239,233,0.68);">Antibiotics, inhalers and other everyday prescriptions.</p>
+        </div>
+        <div class="mr-card" style="background:#14150F; padding:42px 32px 48px; display:flex; flex-direction:column; gap:14px;">
+          <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#E2571E;">Lab samples</span>
+          <h3 style="margin:0; font-size:clamp(26px,2.6vw,34px); font-weight:900; letter-spacing:-0.035em;">Next</h3>
+          <p style="margin:0; max-width:34ch; font-size:17px; line-height:1.55; color:rgba(242,239,233,0.68);">Bring time-sensitive specimens back on the return flight.</p>
+        </div>
+      </div>
+      <p style="margin:40px 0 0; font-size:clamp(22px,2.4vw,32px); font-weight:900; letter-spacing:-0.035em;">Medication out. Samples back.</p>
+      <p style="margin:18px 0 0; max-width:62ch; font-family:'IBM Plex Mono', monospace; font-size:11px; line-height:1.7; letter-spacing:0.06em; color:rgba(242,239,233,0.42);">Controlled substances, blood products and refrigerated biologics are not part of the first pilot.</p>
+    </div>
+  </section>
+
+  <!-- ============================ PANEL 3 · HOW IT WORKS ============================ -->
+  <section id="how" class="mr-section" style="max-width:1440px; margin:0 auto; padding:120px 40px;">
+    <p style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#E2571E; margin:0 0 22px;">The run</p>
+    <h2 style="margin:0 0 56px; font-size:clamp(30px,4.4vw,60px); font-weight:900; letter-spacing:-0.04em; max-width:16ch;">Four handoffs. One less journey.</h2>
+    <div class="mr-steps" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:44px;">
+      <div style="border-top:2px solid #14150F; padding-top:22px;">
+        <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.14em; color:#E2571E;">01</span>
+        <h3 style="margin:14px 0 12px; font-size:23px; font-weight:800; letter-spacing:-0.025em; line-height:1.2;">Pharmacy packs it.</h3>
+        <p style="margin:0; font-size:16px; line-height:1.6; color:rgba(20,21,15,0.68);">The prescription is dispensed, labelled and sealed.</p>
+      </div>
+      <div style="border-top:2px solid #14150F; padding-top:22px;">
+        <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.14em; color:#E2571E;">02</span>
+        <h3 style="margin:14px 0 12px; font-size:23px; font-weight:800; letter-spacing:-0.025em; line-height:1.2;">MILKRUN flies it.</h3>
+        <p style="margin:0; font-size:16px; line-height:1.6; color:rgba(20,21,15,0.68);">A long-range VTOL carries the package to a designated community site.</p>
+      </div>
+      <div style="border-top:2px solid #14150F; padding-top:22px;">
+        <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.14em; color:#E2571E;">03</span>
+        <h3 style="margin:14px 0 12px; font-size:23px; font-weight:800; letter-spacing:-0.025em; line-height:1.2;">A local operator receives it.</h3>
+        <p style="margin:0; font-size:16px; line-height:1.6; color:rgba(20,21,15,0.68);">The package is removed, recorded and secured.</p>
+      </div>
+      <div style="border-top:2px solid #14150F; padding-top:22px;">
+        <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.14em; color:#E2571E;">04</span>
+        <h3 style="margin:14px 0 12px; font-size:23px; font-weight:800; letter-spacing:-0.025em; line-height:1.2;">The patient collects it.</h3>
+        <p style="margin:0; font-size:16px; line-height:1.6; color:rgba(20,21,15,0.68);">Locally.</p>
+      </div>
+    </div>
+    <p style="margin:52px 0 0; padding-top:26px; border-top:1px solid rgba(20,21,15,0.18); max-width:70ch; font-size:17px; line-height:1.55; font-weight:600; letter-spacing:-0.01em;">MILKRUN moves sealed packages. Clinicians and pharmacists keep the clinical decisions.</p>
+  </section>
+
+  <!-- ============================ PANEL 4 · COMMUNITY ============================ -->
+  <section id="community" class="mr-band" style="background:#FBFAF7; border-top:1px solid rgba(20,21,15,0.14); border-bottom:1px solid rgba(20,21,15,0.14); padding:110px 0;">
+    <div class="mr-inner" style="max-width:1440px; margin:0 auto; padding:0 40px;">
+      <div class="mr-community" style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:72px; align-items:start;">
+        <div>
+          <p style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#E2571E; margin:0 0 22px;">Operated locally</p>
+          <h2 style="margin:0; font-size:clamp(30px,4.2vw,56px); font-weight:900; letter-spacing:-0.04em; line-height:1.04; max-width:15ch;">MILKRUN creates opportunity along the route.</h2>
+          <p style="margin:28px 0 0; max-width:44ch; font-size:17px; line-height:1.65; color:rgba(20,21,15,0.7);">As the network grows, local training could extend into RPAS operations and aviation roles.</p>
+        </div>
+        <div>
+          <p style="margin:0 0 16px; font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">A paid community operator could</p>
+          <ul style="margin:0; padding:0; list-style:none; border-top:1px solid rgba(20,21,15,0.16);">
+            <li style="padding:17px 0; border-bottom:1px solid rgba(20,21,15,0.16); font-size:clamp(19px,1.7vw,23px); font-weight:700; letter-spacing:-0.02em; display:flex; gap:16px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:400; color:#E2571E; padding-top:7px;">01</span>Receive the aircraft</li>
+            <li style="padding:17px 0; border-bottom:1px solid rgba(20,21,15,0.16); font-size:clamp(19px,1.7vw,23px); font-weight:700; letter-spacing:-0.02em; display:flex; gap:16px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:400; color:#E2571E; padding-top:7px;">02</span>Unload the package</li>
+            <li style="padding:17px 0; border-bottom:1px solid rgba(20,21,15,0.16); font-size:clamp(19px,1.7vw,23px); font-weight:700; letter-spacing:-0.02em; display:flex; gap:16px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:400; color:#E2571E; padding-top:7px;">03</span>Record the handoff</li>
+            <li style="padding:17px 0; border-bottom:1px solid rgba(20,21,15,0.16); font-size:clamp(19px,1.7vw,23px); font-weight:700; letter-spacing:-0.02em; display:flex; gap:16px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:400; color:#E2571E; padding-top:7px;">04</span>Secure deliveries</li>
+            <li style="padding:17px 0; border-bottom:1px solid rgba(20,21,15,0.16); font-size:clamp(19px,1.7vw,23px); font-weight:700; letter-spacing:-0.02em; display:flex; gap:16px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:400; color:#E2571E; padding-top:7px;">05</span>Manage the landing site</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -244,100 +322,6 @@
           </div>
         </div>
         <p style="margin:16px 0 0; font-family:'IBM Plex Mono', monospace; font-size:11px; line-height:1.7; letter-spacing:0.06em; color:rgba(20,21,15,0.5);">Pemberton / Mount Currie, N&rsquo;Quatqua, Samahquam, Skatin and Xa&rsquo;xtsa. Corridors shown are indicative only.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ HOW IT WORKS ============================ -->
-  <section id="how" class="mr-band" style="background:#14150F; color:#F2EFE9; padding:110px 0;">
-    <div class="mr-inner" style="max-width:1440px; margin:0 auto; padding:0 40px;">
-      <div class="mr-section-head" style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; padding-bottom:36px; border-bottom:1px solid rgba(242,239,233,0.2);">
-        <h2 style="margin:0; font-size:clamp(30px,4.4vw,60px); font-weight:900; letter-spacing:-0.04em; max-width:20ch;">A logistics service, not a new pharmacy.</h2>
-        <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(242,239,233,0.55);">How it works</span>
-      </div>
-      <div class="mr-steps" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:rgba(242,239,233,0.2); border-bottom:1px solid rgba(242,239,233,0.2);">
-        <div class="mr-card" style="background:#14150F; padding:40px 28px 48px; min-height:250px; display:flex; flex-direction:column; gap:14px;">
-          <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; color:#E2571E;">01</span>
-          <h3 style="margin:0; font-size:24px; font-weight:700; letter-spacing:-0.02em;">Dispensed</h3>
-          <p style="margin:0; font-size:15px; line-height:1.55; color:rgba(242,239,233,0.66);">The pharmacy dispenses, labels and seals the prescription as usual.</p>
-        </div>
-        <div class="mr-card" style="background:#14150F; padding:40px 28px 48px; min-height:250px; display:flex; flex-direction:column; gap:14px;">
-          <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; color:#E2571E;">02</span>
-          <h3 style="margin:0; font-size:24px; font-weight:700; letter-spacing:-0.02em;">Transported</h3>
-          <p style="margin:0; font-size:15px; line-height:1.55; color:rgba(242,239,233,0.66);">The sealed package is handed to the approved RPAS operator and flown to the designated community receiving site.</p>
-        </div>
-        <div class="mr-card" style="background:#14150F; padding:40px 28px 48px; min-height:250px; display:flex; flex-direction:column; gap:14px;">
-          <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; color:#E2571E;">03</span>
-          <h3 style="margin:0; font-size:24px; font-weight:700; letter-spacing:-0.02em;">Received</h3>
-          <p style="margin:0; font-size:15px; line-height:1.55; color:rgba(242,239,233,0.66);">A trained local person receives the package and places it into the agreed secure handoff process.</p>
-        </div>
-        <div class="mr-card" style="background:#14150F; padding:40px 28px 48px; min-height:250px; display:flex; flex-direction:column; gap:14px;">
-          <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; color:#E2571E;">04</span>
-          <h3 style="margin:0; font-size:24px; font-weight:700; letter-spacing:-0.02em;">Collected</h3>
-          <p style="margin:0; font-size:15px; line-height:1.55; color:rgba(242,239,233,0.66);">The patient is notified and collects the prescription locally.</p>
-        </div>
-      </div>
-      <p style="margin:32px 0 0; max-width:70ch; font-size:15px; line-height:1.65; color:rgba(242,239,233,0.6);">MILKRUN would provide the transport layer. Prescribing, dispensing and clinical decisions remain with the appropriate healthcare and pharmacy professionals.</p>
-    </div>
-  </section>
-
-  <!-- ============================ WHAT WE WOULD CARRY ============================ -->
-  <section class="mr-section" style="max-width:1440px; margin:0 auto; padding:120px 40px;">
-    <div class="mr-section-head" style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; margin-bottom:56px;">
-      <h2 style="margin:0; font-size:clamp(30px,4.2vw,56px); font-weight:900; letter-spacing:-0.04em; max-width:18ch;">Start with the boring thing that matters.</h2>
-      <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">What we would carry</span>
-    </div>
-    <div class="mr-carry" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;">
-      <div style="border:1px solid rgba(20,21,15,0.18); border-top:3px solid #E2571E; padding:34px 30px 40px; display:flex; flex-direction:column; gap:14px;">
-        <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Initial use case</span>
-        <h3 style="margin:0; font-size:28px; font-weight:800; letter-spacing:-0.03em;">Prescription medication</h3>
-        <p style="margin:0; font-size:16px; line-height:1.6; color:rgba(20,21,15,0.68);">Small, time-sensitive prescriptions where avoiding an additional trip into Pemberton creates a clear benefit. Antibiotics are the reference case for the first pilot.</p>
-      </div>
-      <div style="border:1px solid rgba(20,21,15,0.18); border-top:3px solid rgba(20,21,15,0.35); padding:34px 30px 40px; display:flex; flex-direction:column; gap:14px;">
-        <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Later</span>
-        <h3 style="margin:0; font-size:28px; font-weight:800; letter-spacing:-0.03em;">Lab specimens</h3>
-        <p style="margin:0; font-size:16px; line-height:1.6; color:rgba(20,21,15,0.68);">A return flight could eventually move appropriately packaged specimens from a community back toward the laboratory system. That could turn the service into a two-way healthcare logistics network.</p>
-      </div>
-      <div style="border:1px solid rgba(20,21,15,0.18); border-top:3px solid rgba(20,21,15,0.15); padding:34px 30px 40px; display:flex; flex-direction:column; gap:14px;">
-        <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Not in the first pilot</span>
-        <h3 style="margin:0; font-size:28px; font-weight:800; letter-spacing:-0.03em; color:rgba(20,21,15,0.55);">Complex payloads</h3>
-        <p style="margin:0; font-size:16px; line-height:1.6; color:rgba(20,21,15,0.55);">Controlled substances, blood products, refrigerated biologics and other complex payloads are not part of the initial proposal.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ COMMUNITY ============================ -->
-  <section id="community" class="mr-band" style="background:#FBFAF7; border-top:1px solid rgba(20,21,15,0.14); border-bottom:1px solid rgba(20,21,15,0.14); padding:110px 0;">
-    <div class="mr-inner" style="max-width:1440px; margin:0 auto; padding:0 40px;">
-      <div class="mr-community" style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:72px; align-items:start;">
-        <div>
-          <p style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#E2571E; margin:0 0 22px;">Community</p>
-          <h2 style="margin:0; font-size:clamp(30px,4.2vw,60px); font-weight:900; letter-spacing:-0.04em; line-height:1.02; max-width:16ch;">Built with the communities it serves.</h2>
-          <div style="margin-top:26px; display:flex; flex-direction:column; gap:18px; max-width:46ch; font-size:17px; line-height:1.65; color:rgba(20,21,15,0.7);">
-            <p style="margin:0;">MILKRUN should create local capability as well as move packages. The proposed operating model includes paid local roles in each participating community.</p>
-            <p style="margin:0;">If the selected aircraft requires battery exchange or charging at the destination, that could also be handled locally after appropriate training.</p>
-            <p style="margin:0;">As the network develops, the aim would be to create pathways into RPAS training and operational roles rather than permanently importing all aviation staff from outside the communities.</p>
-          </div>
-        </div>
-        <div style="border:1px solid rgba(20,21,15,0.18); padding:36px 34px 40px;">
-          <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Proposed local role</span>
-          <h3 style="margin:12px 0 6px; font-size:30px; font-weight:800; letter-spacing:-0.03em;">Community Logistics Operator</h3>
-          <p style="margin:0 0 24px; font-size:15px; line-height:1.6; color:rgba(20,21,15,0.6);">A trained local person who could support:</p>
-          <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; border-top:1px solid rgba(20,21,15,0.14);">
-            <li style="padding:13px 0; border-bottom:1px solid rgba(20,21,15,0.14); font-size:16px; line-height:1.4; display:flex; gap:14px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#E2571E; padding-top:3px;">01</span>Landing-site checks before arrival</li>
-            <li style="padding:13px 0; border-bottom:1px solid rgba(20,21,15,0.14); font-size:16px; line-height:1.4; display:flex; gap:14px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#E2571E; padding-top:3px;">02</span>Receiving and removing the sealed package</li>
-            <li style="padding:13px 0; border-bottom:1px solid rgba(20,21,15,0.14); font-size:16px; line-height:1.4; display:flex; gap:14px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#E2571E; padding-top:3px;">03</span>Recording receipt</li>
-            <li style="padding:13px 0; border-bottom:1px solid rgba(20,21,15,0.14); font-size:16px; line-height:1.4; display:flex; gap:14px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#E2571E; padding-top:3px;">04</span>Secure storage</li>
-            <li style="padding:13px 0; border-bottom:1px solid rgba(20,21,15,0.14); font-size:16px; line-height:1.4; display:flex; gap:14px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#E2571E; padding-top:3px;">05</span>Coordinating patient collection</li>
-            <li style="padding:13px 0; border-bottom:1px solid rgba(20,21,15,0.14); font-size:16px; line-height:1.4; display:flex; gap:14px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#E2571E; padding-top:3px;">06</span>Reporting local weather or site conditions</li>
-            <li style="padding:13px 0; border-bottom:1px solid rgba(20,21,15,0.14); font-size:16px; line-height:1.4; display:flex; gap:14px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#E2571E; padding-top:3px;">07</span>Basic ground equipment support</li>
-          </ul>
-        </div>
-      </div>
-
-      <div style="margin-top:56px; border-left:3px solid #E2571E; padding:6px 0 6px 26px; max-width:70ch;">
-        <h3 style="margin:0 0 12px; font-size:22px; font-weight:800; letter-spacing:-0.025em;">Make the first aircraft local too.</h3>
-        <p style="margin:0; font-size:16px; line-height:1.65; color:rgba(20,21,15,0.68);">If a pilot goes ahead, MILKRUN would like local youth to help name the first aircraft and design its livery or landing-site identity. This follows an approach already used in Indigenous healthcare drone projects in British Columbia.</p>
       </div>
     </div>
   </section>
@@ -395,15 +379,40 @@
     </div>
   </section>
 
-  <!-- ============================ WHY THIS IS WORTH TESTING ============================ -->
-  <section class="mr-section mr-problem" style="max-width:1440px; margin:0 auto; padding:120px 40px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.25fr); gap:80px; align-items:start;">
-    <h2 style="margin:0; font-size:14px; font-family:'IBM Plex Mono', monospace; letter-spacing:0.18em; text-transform:uppercase; color:#E2571E;">Why this is worth testing</h2>
-    <div>
-      <p style="margin:0; font-size:clamp(24px, 3vw, 42px); line-height:1.22; font-weight:600; letter-spacing:-0.025em; text-wrap:pretty;">This is not a new category of technology.</p>
-      <p style="margin:28px 0 0; font-size:17px; line-height:1.65; max-width:58ch; color:rgba(20,21,15,0.7);">Medical drone delivery has already been demonstrated in British Columbia, including work with Indigenous communities. The remaining question for MILKRUN is more practical:</p>
-      <p style="margin:32px 0 0; padding-top:26px; border-top:2px solid #14150F; font-size:20px; line-height:1.45; font-weight:700; letter-spacing:-0.02em; max-width:44ch;">Can this particular healthcare problem be served reliably, safely and economically on these particular routes?</p>
-      <p style="margin:20px 0 0; font-size:17px; line-height:1.65; max-width:52ch; color:rgba(20,21,15,0.7);">That is what the pilot is intended to establish.</p>
-      <a href="https://dronetransport.med.ubc.ca/" target="_blank" rel="noopener noreferrer" class="mr-extlink" style="display:inline-block; margin-top:34px; padding-bottom:4px; border-bottom:1px solid rgba(20,21,15,0.3); font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase;">See related BC healthcare drone work ↗</a>
+  <!-- ============================ PANEL 5 · PRECEDENT ============================ -->
+  <section id="precedent" class="mr-band" style="background:#FBFAF7; border-top:1px solid rgba(20,21,15,0.14); border-bottom:1px solid rgba(20,21,15,0.14); padding:110px 0;">
+    <div class="mr-inner" style="max-width:1440px; margin:0 auto; padding:0 40px;">
+      <p style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#E2571E; margin:0 0 44px;">Drone Transport Initiative &mdash; UBC Faculty of Medicine</p>
+
+      <div class="mr-statwall" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:1px; background:rgba(20,21,15,0.18); border-top:1px solid rgba(20,21,15,0.18); border-bottom:1px solid rgba(20,21,15,0.18);">
+        <div style="background:#FBFAF7; padding:34px 32px 40px 0;">
+          <div class="mr-statnum" style="font-size:clamp(56px,7.4vw,104px); font-weight:900; letter-spacing:-0.05em; line-height:0.9;">1,228</div>
+          <div style="margin-top:16px; font-size:19px; font-weight:700; letter-spacing:-0.015em;">flights completed.</div>
+        </div>
+        <div style="background:#FBFAF7; padding:34px 0 40px 32px;">
+          <div class="mr-statnum" style="font-size:clamp(56px,7.4vw,104px); font-weight:900; letter-spacing:-0.05em; line-height:0.9;">91%</div>
+          <div style="margin-top:16px; max-width:30ch; font-size:19px; font-weight:700; letter-spacing:-0.015em; line-height:1.35;">of surveyed community members said drone transport could improve access to healthcare.</div>
+        </div>
+      </div>
+
+      <div class="mr-statfacts" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:44px; margin-top:44px;">
+        <div style="border-top:2px solid #E2571E; padding-top:18px;">
+          <h3 style="margin:0 0 8px; font-size:20px; font-weight:800; letter-spacing:-0.025em;">Real medical items transported.</h3>
+          <p style="margin:0; font-size:16px; line-height:1.6; color:rgba(20,21,15,0.68);">Medications flown under a Transport Canada dangerous-goods approval.</p>
+        </div>
+        <div style="border-top:2px solid #E2571E; padding-top:18px;">
+          <h3 style="margin:0 0 8px; font-size:20px; font-weight:800; letter-spacing:-0.025em;">BVLOS operations demonstrated.</h3>
+          <p style="margin:0; font-size:16px; line-height:1.6; color:rgba(20,21,15,0.68);">Beyond-visual-line-of-sight approval granted by Transport Canada.</p>
+        </div>
+      </div>
+
+      <p style="margin:44px 0 0; max-width:66ch; font-size:17px; line-height:1.65; color:rgba(20,21,15,0.7);">The Drone Transport Initiative tested drone-enabled healthcare delivery in northern British Columbia, working with remote communities to move medical supplies and support healthcare logistics.</p>
+
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:18px 28px; margin-top:34px;">
+        <a href="https://dronetransport.med.ubc.ca/about-2/" target="_blank" rel="noopener noreferrer" class="mr-cta-dark" style="display:inline-flex; align-items:center; gap:10px; background:#14150F; color:#F2EFE9; padding:16px 28px; border-radius:100px; font-size:14px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">Explore the project ↗</a>
+        <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(20,21,15,0.5);">Independent precedent · Not affiliated</span>
+      </div>
+      <p style="margin:22px 0 0; max-width:70ch; font-family:'IBM Plex Mono', monospace; font-size:10.5px; line-height:1.7; letter-spacing:0.05em; color:rgba(20,21,15,0.45);">Phase I, Stellat&rsquo;en First Nation and the Village of Fraser Lake, October 2021 &ndash; October 2022. Survey figure from 31 community respondents.</p>
     </div>
   </section>
 
@@ -461,17 +470,16 @@
         <h2 style="margin:0; font-size:clamp(34px,5.2vw,76px); font-weight:900; letter-spacing:-0.045em; line-height:0.98;">Build the first route with us.</h2>
       </div>
       <div>
-        <p style="margin:0 0 16px; font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(242,239,233,0.5);">We are speaking with</p>
-        <ul style="margin:0 0 28px; padding:0; list-style:none; border-top:1px solid rgba(242,239,233,0.2);">
-          <li style="padding:11px 0; border-bottom:1px solid rgba(242,239,233,0.2); font-size:17px; font-weight:600; letter-spacing:-0.01em;">Healthcare providers</li>
-          <li style="padding:11px 0; border-bottom:1px solid rgba(242,239,233,0.2); font-size:17px; font-weight:600; letter-spacing:-0.01em;">First Nations health partners</li>
-          <li style="padding:11px 0; border-bottom:1px solid rgba(242,239,233,0.2); font-size:17px; font-weight:600; letter-spacing:-0.01em;">Pharmacies</li>
-          <li style="padding:11px 0; border-bottom:1px solid rgba(242,239,233,0.2); font-size:17px; font-weight:600; letter-spacing:-0.01em;">RPAS operators</li>
-          <li style="padding:11px 0; border-bottom:1px solid rgba(242,239,233,0.2); font-size:17px; font-weight:600; letter-spacing:-0.01em;">Aircraft manufacturers</li>
+        <p style="margin:0 0 16px; font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(242,239,233,0.5);">MILKRUN is looking for partners across</p>
+        <ul style="margin:0 0 32px; padding:0; list-style:none; border-top:1px solid rgba(242,239,233,0.2);">
+          <li style="padding:12px 0; border-bottom:1px solid rgba(242,239,233,0.2); font-size:19px; font-weight:700; letter-spacing:-0.02em;">Healthcare</li>
+          <li style="padding:12px 0; border-bottom:1px solid rgba(242,239,233,0.2); font-size:19px; font-weight:700; letter-spacing:-0.02em;">Communities</li>
+          <li style="padding:12px 0; border-bottom:1px solid rgba(242,239,233,0.2); font-size:19px; font-weight:700; letter-spacing:-0.02em;">Pharmacy</li>
+          <li style="padding:12px 0; border-bottom:1px solid rgba(242,239,233,0.2); font-size:19px; font-weight:700; letter-spacing:-0.02em;">RPAS operations</li>
+          <li style="padding:12px 0; border-bottom:1px solid rgba(242,239,233,0.2); font-size:19px; font-weight:700; letter-spacing:-0.02em;">Aircraft</li>
         </ul>
-        <p style="margin:0 0 26px; font-size:17px; line-height:1.6; color:rgba(242,239,233,0.7);">If you are working on the same problem, we would like to hear from you.</p>
         <a href="mailto:jessica@milkrun.ca" class="mr-cta-solid" style="display:inline-flex; align-items:center; gap:12px; background:#E2571E; color:#FBFAF7; padding:18px 30px; border-radius:100px; font-size:15px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">Get in touch</a>
-        <p style="margin:18px 0 0; font-family:'IBM Plex Mono', monospace; font-size:13px; letter-spacing:0.04em;"><a href="mailto:jessica@milkrun.ca" style="color:rgba(242,239,233,0.75);">jessica@milkrun.ca</a></p>
+        <p style="margin:20px 0 0; font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(242,239,233,0.45);">Pilot-stage project · British Columbia, Canada</p>
       </div>
     </div>
   </section>
@@ -484,21 +492,23 @@
           <span style="width:20px; height:20px; border-radius:50%; border:5px solid #E2571E; display:block;"></span>
           <span style="font-size:22px; font-weight:900; letter-spacing:-0.045em; color:#F2EFE9;">MILKRUN</span>
         </div>
-        <p style="margin:12px 0 0; font-size:15px; color:rgba(242,239,233,0.6);">Healthcare logistics, by air.</p>
+        <p style="margin:12px 0 0; font-size:15px; color:rgba(242,239,233,0.6);">Medication over the mountains, in minutes.</p>
       </div>
       <div style="font-family:'IBM Plex Mono', monospace; font-size:12px; line-height:1.9; letter-spacing:0.06em;">
         <div>British Columbia, Canada</div>
-        <div><a href="mailto:jessica@milkrun.ca">jessica@milkrun.ca</a></div>
+        <div style="color:#E2571E;">Pilot in development</div>
       </div>
       <div class="mr-footer-links" style="display:flex; flex-direction:column; gap:6px; font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.08em;">
-        <a href="#pilot">Pilot</a>
+        <a href="#problem">Problem</a>
+        <a href="#payload">Payload</a>
+        <a href="#how">How it works</a>
         <a href="#community">Community</a>
-        <a href="#aircraft">Aircraft</a>
+        <a href="#precedent">Precedent</a>
         <a href="#partner">Partner</a>
       </div>
     </div>
     <div class="mr-inner" style="max-width:1440px; margin:40px auto 0; padding:24px 40px 0; border-top:1px solid rgba(242,239,233,0.16); font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.08em; color:rgba(242,239,233,0.45);">
-      Feasibility-stage project · © 2026 MILKRUN
+      © 2026 MILKRUN
     </div>
   </footer>
 </div>
