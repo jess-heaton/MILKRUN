@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MILKRUN — Healthcare logistics, by air.</title>
+<title>MILKRUN</title>
 <meta name="description" content="MILKRUN is a feasibility-stage proposal for an on-demand drone logistics service in British Columbia — flying prescriptions from a Pemberton-area pharmacy to remote communities instead of requiring another trip into town.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
@@ -77,13 +77,21 @@
     .mr-map           { aspect-ratio:1 / 1 !important; }
   }
 
+  /* The six-item nav needs ~900px to sit beside the wordmark. Below that it
+     drops to its own full-width row and the CTA pill flattens into a link —
+     otherwise "Partner" runs off the right edge on a tablet. */
+  @media (max-width: 900px) {
+    .mr-header-inner  { padding:12px 28px 6px !important; gap:2px !important; flex-wrap:wrap !important; justify-content:center !important; }
+    .mr-nav           { width:100% !important; flex-wrap:wrap !important; justify-content:center !important; gap:0 22px !important; font-size:12px !important; }
+    .mr-nav a         { padding:9px 0 !important; }
+    .mr-nav-cta       { background:transparent !important; color:inherit !important; padding:9px 0 !important; border-radius:0 !important; }
+  }
+
   @media (max-width: 700px) {
-    /* The six-item nav cannot sit beside the wordmark on a phone, so it drops to
-       its own full-width row and the CTA pill flattens into a plain link. */
-    .mr-header-inner  { padding:11px 20px 4px !important; gap:2px !important; flex-wrap:wrap !important; justify-content:center !important; }
-    .mr-nav           { width:100% !important; flex-wrap:wrap !important; justify-content:center !important; gap:0 16px !important; font-size:10.5px !important; }
+    .mr-header-inner  { padding:11px 20px 4px !important; }
+    .mr-nav           { gap:0 16px !important; font-size:10.5px !important; }
     .mr-nav a         { padding:8px 0 !important; }
-    .mr-nav-cta       { background:transparent !important; color:inherit !important; padding:8px 0 !important; border-radius:0 !important; }
+    .mr-nav-cta       { padding:8px 0 !important; }
     .mr-logo-word     { font-size:21px !important; }
     .mr-logo-mark     { width:21px !important; height:21px !important; border-width:5px !important; }
     .mr-footer-links a { padding:6px 0 !important; }
@@ -106,7 +114,12 @@
     .mr-scope-row     { flex-direction:column !important; gap:7px !important; }
     .mr-scope-key     { flex:0 0 auto !important; }
     .mr-steps         { grid-template-columns:1fr !important; }
+    /* "Communications" set at 30px is wider than a 320px column, and a grid
+       track cannot shrink below its min-content — it dragged the whole row
+       past the viewport edge. */
     .mr-criteria      { grid-template-columns:1fr !important; }
+    .mr-criteria > div    { min-width:0 !important; padding:26px 20px 30px !important; }
+    .mr-criteria > div > div { font-size:24px !important; overflow-wrap:break-word !important; }
     .mr-work          { grid-template-columns:1fr !important; gap:0 !important; }
 
     .mr-map           { aspect-ratio:4 / 5 !important; }
@@ -155,7 +168,7 @@
     <div class="mr-hero-top" style="position:relative; flex:1 1 auto; min-height:110px;"></div>
 
     <div class="mr-hero-body" style="position:relative; max-width:1440px; width:100%; margin:0 auto; padding:24px 40px 76px;">
-      <p class="mr-reveal mr-hero-eyebrow" style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:#E2571E; margin:0 0 28px;">Healthcare logistics · British Columbia</p>
+      <p class="mr-reveal mr-hero-eyebrow" style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:#E2571E; margin:0 0 28px; text-shadow:0 1px 14px rgba(10,11,8,0.85);">Healthcare logistics · British Columbia</p>
       <h1 class="mr-reveal" style="transition-delay:.12s; margin:0; font-size:clamp(36px, 6.2vw, 96px); line-height:0.94; font-weight:900; letter-spacing:-0.045em; max-width:17ch; text-wrap:balance;">Medication over the mountains, in minutes.</h1>
       <div class="mr-hero-actions" style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:40px; margin-top:40px;">
         <div class="mr-reveal" style="transition-delay:.3s; max-width:48ch;">
