@@ -29,6 +29,28 @@
   .mr-card:hover        { background:#1D1E16 !important; }
   .mr-extlink:hover     { border-bottom-color:#E2571E !important; }
 
+  /* ---- Hero: the film plays, then the copy arrives.
+     Every line is in the DOM from the first byte — this only animates it — and
+     the script forces the reveal if the video is blocked, slow, or unwanted,
+     so the headline is never gated on a video that may never play. ---- */
+  .mr-hero-video  { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+  .mr-reveal      { opacity:0; transform:translateY(18px);
+                    transition:opacity 1s cubic-bezier(.2,.65,.25,1), transform 1s cubic-bezier(.2,.65,.25,1); }
+  .is-revealed .mr-reveal { opacity:1; transform:none; }
+  /* Two scrims cross-fade: a light one so the film reads clean, then a heavy
+     one that lands with the type. The final frame is a bright sky, and white
+     copy over bare footage is unreadable without it. */
+  .mr-hero-scrim  { opacity:.62; transition:opacity 1.3s ease; }
+  .is-revealed .mr-hero-scrim { opacity:1; }
+  .mr-hero-scrim-text { opacity:0; transition:opacity 1.3s ease; }
+  .is-revealed .mr-hero-scrim-text { opacity:1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html          { scroll-behavior:auto; }
+    .mr-reveal    { transition:none; }
+    .mr-hero-scrim { transition:none; }
+  }
+
   /* ---- Responsive. Base layout is the 1440px design; these only narrow it.
      Overrides need !important because the base styles are inline. ---- */
 
@@ -116,28 +138,33 @@
   <!-- ============================ HERO ============================ -->
   <section id="top" class="mr-hero" style="position:relative; min-height:88vh; display:flex; flex-direction:column; justify-content:space-between; padding:0; background:#14150F; color:#F2EFE9; overflow:hidden;">
     <canvas id="mr-hero" style="position:absolute; inset:0; width:100%; height:100%; display:block;"></canvas>
-    <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,11,8,0.94) 0%, rgba(10,11,8,0.55) 38%, rgba(10,11,8,0.12) 70%, rgba(10,11,8,0.5) 100%);"></div>
+    <video id="mr-hero-video" class="mr-hero-video" autoplay muted playsinline preload="auto" poster="hero-poster.jpg" aria-hidden="true" tabindex="-1">
+      <source src="hero.mp4" type="video/mp4" media="(min-width: 801px)">
+      <source src="hero-720.mp4" type="video/mp4">
+    </video>
+    <div class="mr-hero-scrim" style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,11,8,0.94) 0%, rgba(10,11,8,0.55) 38%, rgba(10,11,8,0.12) 70%, rgba(10,11,8,0.5) 100%);"></div>
+    <div class="mr-hero-scrim-text" style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,11,8,0.9) 0%, rgba(10,11,8,0.66) 42%, rgba(10,11,8,0.4) 72%, rgba(10,11,8,0.34) 100%);"></div>
     <div style="position:absolute; inset:0; background-image:repeating-linear-gradient(115deg, rgba(242,239,233,0.05) 0 1px, transparent 1px 26px);"></div>
 
     <div class="mr-hero-top" style="position:relative; flex:1 1 auto; min-height:110px;"></div>
 
     <div class="mr-hero-body" style="position:relative; max-width:1440px; width:100%; margin:0 auto; padding:24px 40px 52px;">
-      <p style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:#E2571E; margin:0 0 28px;">Proposal · British Columbia</p>
-      <h1 style="margin:0; font-size:clamp(36px, 6.2vw, 96px); line-height:0.94; font-weight:900; letter-spacing:-0.045em; max-width:17ch; text-wrap:balance;">Medicine to the community, not another trip to town.</h1>
+      <p class="mr-reveal" style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:#E2571E; margin:0 0 28px;">Proposal · British Columbia</p>
+      <h1 class="mr-reveal" style="transition-delay:.12s; margin:0; font-size:clamp(36px, 6.2vw, 96px); line-height:0.94; font-weight:900; letter-spacing:-0.045em; max-width:17ch; text-wrap:balance;">Medicine to the community, not another trip to town.</h1>
       <div class="mr-hero-actions" style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:40px; margin-top:40px;">
-        <div style="max-width:56ch;">
+        <div class="mr-reveal" style="transition-delay:.3s; max-width:56ch;">
           <p style="margin:0; font-size:19px; line-height:1.5; color:rgba(242,239,233,0.82);">MILKRUN is developing an on-demand drone logistics service for remote communities in British Columbia.</p>
           <p style="margin:16px 0 0; font-size:16px; line-height:1.6; color:rgba(242,239,233,0.62);">The first use case is simple: when a patient is prescribed medication during a community clinic, deliver the prescription from the Pemberton area to the community instead of requiring the patient or their family to make another trip into town.</p>
         </div>
-        <div class="mr-hero-buttons" style="display:flex; gap:12px;">
+        <div class="mr-hero-buttons mr-reveal" style="transition-delay:.42s; display:flex; gap:12px;">
           <a href="#pilot" class="mr-cta-solid" style="background:#E2571E; color:#FBFAF7; padding:16px 28px; border-radius:100px; font-size:14px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">Explore the pilot</a>
           <a href="#partner" class="mr-cta-ghost" style="border:1px solid rgba(242,239,233,0.35); padding:16px 28px; border-radius:100px; font-size:14px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">Partner with us</a>
         </div>
       </div>
-      <p style="margin:30px 0 0; font-family:'IBM Plex Mono', monospace; font-size:11px; line-height:1.6; letter-spacing:0.1em; text-transform:uppercase; color:rgba(242,239,233,0.45);">Feasibility-stage project. No MILKRUN routes are currently operational.</p>
+      <p class="mr-reveal" style="transition-delay:.52s; margin:30px 0 0; font-family:'IBM Plex Mono', monospace; font-size:11px; line-height:1.6; letter-spacing:0.1em; text-transform:uppercase; color:rgba(242,239,233,0.45);">Concept visualisation. Feasibility-stage project — no MILKRUN routes are currently operational.</p>
     </div>
 
-    <div style="position:relative; border-top:1px solid rgba(242,239,233,0.16); background:rgba(20,21,15,0.5);">
+    <div class="mr-reveal" style="transition-delay:.62s; position:relative; border-top:1px solid rgba(242,239,233,0.16); background:rgba(20,21,15,0.5);">
       <div class="mr-inner" style="max-width:1440px; margin:0 auto; padding:0 40px;">
         <div class="mr-stats" style="display:grid; grid-template-columns:repeat(4, 1fr);">
           <div class="mr-stat" style="padding:26px 24px 26px 0; border-right:1px solid rgba(242,239,233,0.16);">
@@ -521,7 +548,19 @@
 
   var t0 = null;
 
+  // The ridgeline is the backdrop of last resort now — it runs until the hero
+  // film (or even just its poster) has something on screen, and comes back if
+  // the video errors out.
+  var stopped = false;
+  window.addEventListener("mr:backdrop-off", function () { stopped = true; });
+  window.addEventListener("mr:backdrop-on", function () {
+    if (!stopped) return;
+    stopped = false; t0 = null;
+    requestAnimationFrame(draw);
+  });
+
   function draw(now) {
+    if (stopped) return;
     if (t0 === null) t0 = now;
     var t = Math.max(0, (now - t0) / 1000);
     try {
@@ -584,6 +623,72 @@
     requestAnimationFrame(draw);
   }
   requestAnimationFrame(draw);
+})();
+
+(function () {
+  var hero = document.getElementById("top");
+  var video = document.getElementById("mr-hero-video");
+  if (!hero) return;
+
+  var revealed = false, startGuard, endGuard;
+
+  function reveal() {
+    if (revealed) return;
+    revealed = true;
+    clearTimeout(startGuard); clearTimeout(endGuard);
+    hero.classList.add("is-revealed");
+  }
+
+  // Whatever the video does, the copy is never more than a gesture away.
+  ["scroll", "wheel", "touchstart", "pointerdown", "keydown"].forEach(function (e) {
+    window.addEventListener(e, reveal, { once: true, passive: true });
+  });
+
+  // Once the poster is up there is nothing left for the canvas to back.
+  if (video && video.poster) {
+    var poster = new Image();
+    poster.onload = function () { window.dispatchEvent(new Event("mr:backdrop-off")); };
+    poster.src = video.poster;
+  }
+
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var conn = navigator.connection || {};
+  var thrifty = conn.saveData === true || /^(slow-2g|2g)$/.test(conn.effectiveType || "");
+
+  // Reduced motion or a metered connection: keep the still, drop the download.
+  if (!video || reduce || thrifty) {
+    if (video) {
+      video.removeAttribute("autoplay");
+      video.pause();
+      while (video.firstChild) video.removeChild(video.firstChild);
+      video.removeAttribute("src");
+      video.load();               // aborts the fetch; the poster stays put
+    }
+    reveal();
+    return;
+  }
+
+  // If playback has not begun promptly, stop withholding the headline.
+  startGuard = setTimeout(reveal, 2800);
+
+  video.addEventListener("playing", function () {
+    clearTimeout(startGuard);
+    window.dispatchEvent(new Event("mr:backdrop-off"));
+    var left = (isFinite(video.duration) ? Math.max(0, video.duration - video.currentTime) : 10) * 1000;
+    clearTimeout(endGuard);
+    endGuard = setTimeout(reveal, left + 1500);   // backstop if "ended" never fires
+  });
+
+  video.addEventListener("ended", reveal);
+  video.addEventListener("error", function () {
+    window.dispatchEvent(new Event("mr:backdrop-on"));
+    reveal();
+  });
+
+  var started = video.play();
+  if (started && typeof started.catch === "function") {
+    started.catch(reveal);        // autoplay refused — show the copy over the still
+  }
 })();
 </script>
 </body>
