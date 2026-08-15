@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MILKRUN</title>
-<meta name="description" content="MILKRUN is developing on-demand drone delivery for rural and remote First Nation communities in British Columbia — flying prescriptions the last leg, so the trip into town isn't the patient's problem.">
+<meta name="description" content="MILKRUN is developing on-demand drone delivery for rural and remote communities in British Columbia. A prescription can be written in the community — getting it filled shouldn't mean hours on the road.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="favicon-192.png" sizes="192x192" type="image/png">
@@ -225,7 +225,8 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 
 .problem__head { max-width: 18ch; }
 .problem__head .accent { color: var(--signal); display: block; }
-.problem__body { margin: 28px 0 0; max-width: 46ch; }
+.problem__body { margin: 28px 0 0; max-width: 46ch; display: grid; gap: 16px; }
+.problem__body p { margin: 0; }
 .problem__close {
   margin: 36px 0 0; padding-top: 26px; border-top: 2px solid var(--ink);
   font-size: clamp(19px, 4.8vw, 28px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.25;
@@ -276,17 +277,13 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 }
 /* Two separate statements, so they get separate lines rather than running on. */
 .run__close span { display: block; }
+.run__note { margin: 18px 0 0; max-width: 60ch; font: 400 10.5px/1.7 var(--mono); letter-spacing: 0.06em; color: rgba(20,21,15,0.5); }
 
 /* ============================================================
    PANEL 4 — COMMUNITY  (a role, written out as duties)
    ============================================================ */
 
-.community__sub {
-  margin: 20px 0 0; max-width: 22ch;
-  font-size: clamp(20px, 5.2vw, 28px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.25;
-}
-.community__sub b { color: var(--signal); font-weight: 900; }
-.community__close { margin: 22px 0 0; max-width: 46ch; }
+.community__close { margin: 26px 0 0; max-width: 46ch; }
 
 .duties__intro {
   margin: 34px 0 0;
@@ -480,8 +477,8 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 
   <div class="hero__body">
     <p class="hero__eyebrow reveal">Healthcare logistics · British Columbia</p>
-    <h1 class="h-xl reveal" style="transition-delay:.12s">Medication over the Mountains, in Minutes.</h1>
-    <p class="hero__lede reveal" style="transition-delay:.28s">Developing on-demand drone delivery for rural and remote First Nation communities.</p>
+    <h1 class="h-xl reveal" style="transition-delay:.12s">Medication over the mountains, in minutes.</h1>
+    <p class="hero__lede reveal" style="transition-delay:.28s">Developing on-demand drone delivery for rural and remote communities.</p>
     <div class="hero__actions reveal" style="transition-delay:.4s">
       <a class="btn btn--signal" href="#how">The pilot</a>
       <a class="btn btn--ghost" href="#partner">Partner with us</a>
@@ -495,8 +492,11 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
     <p class="label">The problem</p>
     <h2 class="h-lg problem__head">The doctor comes to you.<span class="accent">Your medicine should too.</span></h2>
     <div class="problem__aside">
-      <p class="body problem__body">When the pharmacy is hours away, driving for miles, expensive gas, or finding a ride stands between you and your health.</p>
-      <p class="problem__close"><b>MILKRUN</b> flies prescriptions directly to your community.</p>
+      <div class="problem__body">
+        <p class="body">A prescription can be written in the community.</p>
+        <p class="body">Getting it filled can still mean hours on the road &mdash; or finding someone else to make the trip.</p>
+      </div>
+      <p class="problem__close"><b>MILKRUN</b> brings the medication instead.</p>
     </div>
   </div>
 </section>
@@ -514,7 +514,7 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
           <span class="manifest__kind">Pilot</span>
         </div>
         <h3 class="manifest__when">Prescriptions</h3>
-        <p>Antibiotics, inhalers and other everyday prescriptions.</p>
+        <p>Antibiotics, inhalers and other everyday prescriptions, delivered on demand.</p>
       </div>
       <div class="manifest__item">
         <div class="manifest__top">
@@ -522,12 +522,11 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
           <span class="manifest__kind">Next phase</span>
         </div>
         <h3 class="manifest__when">Lab samples</h3>
-        <p>Bring time-sensitive specimens back on the return flight.</p>
+        <p>Time-sensitive specimens on the return flight.</p>
       </div>
     </div>
 
     <p class="manifest__close">Medication out. Samples back.</p>
-    <p class="manifest__note">Controlled substances, blood products and refrigerated biologics are not part of the first pilot.</p>
   </div>
 </section>
 
@@ -545,7 +544,7 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
       </div>
       <div class="run__step">
         <span class="run__num" aria-hidden="true">02</span>
-        <h3>MILKRUN flies it.</h3>
+        <h3>MILKRUN moves it by air.</h3>
         <p>A long-range VTOL carries the package to a designated community site.</p>
       </div>
       <div class="run__step">
@@ -561,6 +560,7 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
     </div>
 
     <p class="run__close"><span>MILKRUN moves sealed packages.</span> <span>Clinicians and pharmacists keep the clinical decisions.</span></p>
+    <p class="run__note">Pilot flights subject to route-specific aviation, healthcare and community approvals.</p>
   </div>
 </section>
 
@@ -569,18 +569,17 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
   <div class="wrap community">
     <div>
       <p class="label label--dark">Operated locally</p>
-      <h2 class="h-lg">Community ownership.</h2>
-      <p class="community__sub"><b>MILKRUN</b> creates opportunity along the route.</p>
+      <h2 class="h-lg">A local job at every landing site.</h2>
       <p class="body community__close">As the network grows, local training could extend into RPAS operations and aviation roles.</p>
     </div>
     <div class="community__side">
-      <h3 class="duties__intro">A paid community operator could:</h3>
+      <h3 class="duties__intro">Each route could support a paid local operator.</h3>
       <ul class="duties">
-        <li>Receive the aircraft</li>
-        <li>Unload the package</li>
+        <li>Receive deliveries</li>
         <li>Record the handoff</li>
-        <li>Secure deliveries</li>
+        <li>Secure packages</li>
         <li>Manage the landing site</li>
+        <li>Coordinate collection</li>
       </ul>
     </div>
   </div>
@@ -590,34 +589,34 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 <section class="panel panel--ink" id="precedent">
   <div class="wrap">
     <p class="label">Precedent</p>
-    <h2 class="h-lg">This has already flown in Canada.</h2>
+    <h2 class="h-lg">Already tested in BC.</h2>
     <p class="precedent__by">Drone Transport Initiative &middot; UBC Faculty of Medicine</p>
 
     <div class="stats">
       <div class="stat">
         <div class="stat__num">1,228</div>
-        <p class="stat__cap">drone flights completed.</p>
+        <p class="stat__cap">flights completed</p>
       </div>
       <div class="stat">
         <div class="stat__num">91%</div>
-        <p class="stat__cap">of surveyed community members said drone transport could improve access to health care.</p>
+        <p class="stat__cap">believe drone transport can improve health access</p>
       </div>
     </div>
 
     <div class="proofs">
       <div class="proof">
-        <h3>Real medical items transported.</h3>
-        <p>Medications flown under a Transport Canada dangerous-goods approval.</p>
+        <h3>Real medications transported.</h3>
+        <p>Transport Canada approval enabled medication transport.</p>
       </div>
       <div class="proof">
-        <h3>BVLOS operations demonstrated.</h3>
-        <p>Beyond-visual-line-of-sight approval granted by Transport Canada.</p>
+        <h3>BVLOS approved.</h3>
+        <p>Beyond-visual-line-of-sight operations approved by Transport Canada.</p>
       </div>
     </div>
 
     <div class="precedent__actions">
       <a class="btn btn--signal" href="https://dronetransport.med.ubc.ca/about-2/" target="_blank" rel="noopener noreferrer">Explore the project</a>
-      <span class="precedent__note">Independent precedent · Not affiliated</span>
+      <span class="precedent__note">Independent precedent · MILKRUN is not affiliated with UBC</span>
     </div>
     <p class="precedent__src">Phase I, Stellat&rsquo;en First Nation and the Village of Fraser Lake, October 2021 &ndash; October 2022. Survey figure from 31 community respondents.</p>
   </div>
@@ -631,13 +630,13 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
       <h2 class="h-lg">Build the first route with us.</h2>
     </div>
     <div>
-      <p class="partner__intro">MILKRUN is looking for partners across</p>
+      <p class="partner__intro">We&rsquo;re building the first pilot with partners across:</p>
       <ul class="fields">
-        <li>Healthcare</li>
-        <li>Communities</li>
-        <li>Pharmacy</li>
-        <li>RPAS operations</li>
-        <li>Aircraft</li>
+        <li>Healthcare providers</li>
+        <li>First Nations health partners</li>
+        <li>Pharmacies</li>
+        <li>RPAS operators</li>
+        <li>Aircraft manufacturers</li>
       </ul>
       <div class="partner__actions">
         <a class="btn btn--ink" href="mailto:jessica@milkrun.ca">Get in touch</a>
