@@ -90,6 +90,7 @@ img, video { display: block; max-width: 100%; }
   text-transform: uppercase;
   color: var(--signal);
 }
+.label--dark { color: rgba(20,21,15,0.62); }
 .panel--ink .label { color: var(--signal); }
 .panel--signal .label { color: rgba(20,21,15,0.62); }
 
@@ -115,6 +116,8 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 .btn--signal:hover { background: var(--off); color: var(--ink); }
 .btn--ink { background: var(--ink); color: var(--paper); }
 .btn--ink:hover { background: var(--signal); color: var(--off); }
+/* ...but orange-on-orange is invisible, so on the signal panel it lifts to paper. */
+.panel--signal .btn--ink:hover { background: var(--paper); color: var(--ink); }
 .btn--ghost { border-color: rgba(242,239,233,0.4); color: var(--paper); }
 .btn--ghost:hover { border-color: var(--paper); background: var(--paper); color: var(--ink); }
 
@@ -271,25 +274,42 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
   margin: 40px 0 0; padding-top: 24px; border-top: 1px solid var(--rule);
   max-width: 64ch; font-size: clamp(16px, 3.9vw, 18px); line-height: 1.55; font-weight: 600; letter-spacing: -0.01em;
 }
+/* Two separate statements, so they get separate lines rather than running on. */
+.run__close span { display: block; }
 
 /* ============================================================
    PANEL 4 — COMMUNITY  (a role, written out as duties)
    ============================================================ */
 
-.duties { margin: 30px 0 0; padding: 0; list-style: none; border-top: 1px solid rgba(20,21,15,0.22); }
+.community__sub {
+  margin: 20px 0 0; max-width: 22ch;
+  font-size: clamp(20px, 5.2vw, 28px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.25;
+}
+.community__sub b { color: var(--signal); font-weight: 900; }
+.community__close { margin: 22px 0 0; max-width: 46ch; }
+
+.duties__intro {
+  margin: 34px 0 0;
+  font-size: clamp(16px, 4vw, 18px); font-weight: 800; letter-spacing: -0.015em; line-height: 1.3;
+}
+.duties { margin: 14px 0 0; padding: 0; list-style: none; border-top: 1px solid rgba(20,21,15,0.22); }
 .duties li {
   display: flex; align-items: baseline; gap: 14px;
-  padding: 15px 0; border-bottom: 1px solid rgba(20,21,15,0.22);
-  font-size: clamp(18px, 4.6vw, 22px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.25;
+  padding: 14px 0; border-bottom: 1px solid rgba(20,21,15,0.22);
+  font-size: clamp(17px, 4.2vw, 20px); font-weight: 400; letter-spacing: -0.005em; line-height: 1.3;
+  color: rgba(20,21,15,0.86);
 }
 .duties li::before { content: ""; flex: 0 0 auto; width: 14px; height: 3px; background: var(--signal); transform: translateY(-5px); }
-.duties__intro { margin: 26px 0 0; font: 500 10.5px/1.5 var(--mono); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(20,21,15,0.55); }
-.community__close { margin: 26px 0 0; max-width: 46ch; }
 
 /* ============================================================
    PANEL 5 — PRECEDENT  (a stat wall)
    ============================================================ */
 
+.precedent__by {
+  margin: 18px 0 0;
+  font: 500 11px/1.5 var(--mono); letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(242,239,233,0.62);
+}
 .stats { display: grid; gap: 0; margin-top: 34px; border-top: 1px solid var(--rule-light); }
 .stat { padding: 28px 0; border-bottom: 1px solid var(--rule-light); }
 .stat__num { font-size: clamp(58px, 17vw, 108px); font-weight: 900; letter-spacing: -0.055em; line-height: 0.86; }
@@ -402,8 +422,13 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
   .hero__body { padding-bottom: 76px; }
   .hero__tag { padding: 18px var(--gutter); }
 
-  .problem { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,2fr); gap: 64px; align-items: start; }
-  .problem .label { margin: 8px 0 0; }
+  /* Label across the top, headline and supporting copy as facing columns —
+     the old narrow label rail left a dead third of the panel on a laptop. */
+  .problem { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,1fr); gap: 0 72px; align-items: end; }
+  .problem .label { grid-column: 1 / -1; margin-bottom: 30px; }
+  .problem__head  { grid-column: 1; }
+  .problem__aside { grid-column: 2; }
+  .problem__body  { margin-top: 0; }
 
   .manifest { margin-top: 48px; }
   .run { grid-template-columns: repeat(4, 1fr); gap: 32px; }
@@ -443,11 +468,12 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 
 <!-- ============================ HERO ============================ -->
 <section class="hero" id="top">
-  <video class="hero__video" id="hero-video" autoplay muted playsinline preload="auto"
-         poster="hero-poster.jpg" aria-hidden="true" tabindex="-1">
-    <source src="hero.mp4" type="video/mp4" media="(min-width: 801px)">
-    <source src="hero-720.mp4" type="video/mp4">
-  </video>
+  <!-- No <source media> here. WebKit's handling of `media` inside <video> is
+       unreliable, and a phone that matches neither source loads nothing at all
+       — the script picks the file and sets .src directly instead. preload="none"
+       stops the browser fetching before that choice is made. -->
+  <video class="hero__video" id="hero-video" autoplay muted playsinline webkit-playsinline
+         preload="none" poster="hero-poster.jpg" aria-hidden="true" tabindex="-1"></video>
   <div class="hero__scrim"></div>
   <div class="hero__scrim2"></div>
   <p class="hero__tag">Concept visualisation</p>
@@ -467,8 +493,8 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 <section class="panel panel--paper" id="problem">
   <div class="wrap problem">
     <p class="label">The problem</p>
-    <div>
-      <h2 class="h-lg problem__head">The doctor comes to you.<span class="accent">Your medicine should too.</span></h2>
+    <h2 class="h-lg problem__head">The doctor comes to you.<span class="accent">Your medicine should too.</span></h2>
+    <div class="problem__aside">
       <p class="body problem__body">When the pharmacy is hours away, driving for miles, expensive gas, or finding a ride stands between you and your health.</p>
       <p class="problem__close"><b>MILKRUN</b> flies prescriptions directly to your community.</p>
     </div>
@@ -485,17 +511,17 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
       <div class="manifest__item">
         <div class="manifest__top">
           <span class="manifest__arrow" aria-hidden="true">&rarr;</span>
-          <span class="manifest__kind">Prescriptions</span>
+          <span class="manifest__kind">Pilot</span>
         </div>
-        <h3 class="manifest__when">First</h3>
+        <h3 class="manifest__when">Prescriptions</h3>
         <p>Antibiotics, inhalers and other everyday prescriptions.</p>
       </div>
       <div class="manifest__item">
         <div class="manifest__top">
           <span class="manifest__arrow" aria-hidden="true">&larr;</span>
-          <span class="manifest__kind">Lab samples</span>
+          <span class="manifest__kind">Next phase</span>
         </div>
-        <h3 class="manifest__when">Next</h3>
+        <h3 class="manifest__when">Lab samples</h3>
         <p>Bring time-sensitive specimens back on the return flight.</p>
       </div>
     </div>
@@ -534,7 +560,7 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
       </div>
     </div>
 
-    <p class="run__close">MILKRUN moves sealed packages. Clinicians and pharmacists keep the clinical decisions.</p>
+    <p class="run__close"><span>MILKRUN moves sealed packages.</span> <span>Clinicians and pharmacists keep the clinical decisions.</span></p>
   </div>
 </section>
 
@@ -542,12 +568,13 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 <section class="panel panel--glacier" id="community">
   <div class="wrap community">
     <div>
-      <p class="label" style="color:rgba(20,21,15,0.62)">Operated locally</p>
-      <h2 class="h-md" style="max-width:16ch">MILKRUN creates opportunity along the route.</h2>
+      <p class="label label--dark">Operated locally</p>
+      <h2 class="h-lg">Community ownership.</h2>
+      <p class="community__sub"><b>MILKRUN</b> creates opportunity along the route.</p>
       <p class="body community__close">As the network grows, local training could extend into RPAS operations and aviation roles.</p>
     </div>
     <div class="community__side">
-      <p class="duties__intro">A paid community operator could</p>
+      <h3 class="duties__intro">A paid community operator could:</h3>
       <ul class="duties">
         <li>Receive the aircraft</li>
         <li>Unload the package</li>
@@ -562,7 +589,9 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 <!-- ============================ 5 · PRECEDENT ============================ -->
 <section class="panel panel--ink" id="precedent">
   <div class="wrap">
-    <p class="label">Drone Transport Initiative &mdash; UBC Faculty of Medicine</p>
+    <p class="label">Precedent</p>
+    <h2 class="h-lg">This has already flown in Canada.</h2>
+    <p class="precedent__by">Drone Transport Initiative &middot; UBC Faculty of Medicine</p>
 
     <div class="stats">
       <div class="stat">
@@ -586,10 +615,8 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
       </div>
     </div>
 
-    <p class="body precedent__body">The Drone Transport Initiative tested drone-enabled healthcare delivery in northern British Columbia, working with remote communities to move medical supplies and support healthcare logistics.</p>
-
     <div class="precedent__actions">
-      <a class="btn btn--signal" href="https://dronetransport.med.ubc.ca/about-2/" target="_blank" rel="noopener noreferrer">Explore the project ↗</a>
+      <a class="btn btn--signal" href="https://dronetransport.med.ubc.ca/about-2/" target="_blank" rel="noopener noreferrer">Explore the project</a>
       <span class="precedent__note">Independent precedent · Not affiliated</span>
     </div>
     <p class="precedent__src">Phase I, Stellat&rsquo;en First Nation and the Village of Fraser Lake, October 2021 &ndash; October 2022. Survey figure from 31 community respondents.</p>
@@ -633,7 +660,7 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
       </div>
       <div class="footer__meta">
         <div>British Columbia, Canada</div>
-        <div class="live">Pilot in development</div>
+        <div class="live">Proposal stage</div>
       </div>
       <nav class="footer__links" aria-label="Footer">
         <a href="#problem">Problem</a>
@@ -673,17 +700,23 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
   var thrifty = conn.saveData === true || /^(slow-2g|2g)$/.test(conn.effectiveType || "");
 
   // Reduced motion or a metered connection: keep the still, drop the download.
+  // Nothing has been fetched yet (preload="none"), so this costs the visitor
+  // nothing at all.
   if (!video || reduce || thrifty) {
-    if (video) {
-      video.removeAttribute("autoplay");
-      video.pause();
-      while (video.firstChild) video.removeChild(video.firstChild);
-      video.removeAttribute("src");
-      video.load();               // aborts the fetch; the poster stays put
-    }
+    if (video) { video.removeAttribute("autoplay"); video.pause(); }
     reveal();
     return;
   }
+
+  // iOS needs muted as a *property* before play(), not just the attribute.
+  video.muted = true;
+  video.defaultMuted = true;
+  video.playsInline = true;
+
+  video.src = (window.matchMedia && window.matchMedia("(min-width: 801px)").matches)
+    ? "hero.mp4" : "hero-720.mp4";
+  video.preload = "auto";
+  video.load();
 
   // If playback has not begun promptly, stop withholding the headline.
   startGuard = setTimeout(reveal, 2800);
@@ -698,10 +731,22 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
   video.addEventListener("ended", reveal);
   video.addEventListener("error", reveal);
 
-  var started = video.play();
-  if (started && typeof started.catch === "function") {
-    started.catch(reveal);        // autoplay refused — show the copy over the still
+  function attempt() {
+    var started = video.play();
+    if (started && typeof started.catch === "function") {
+      started.catch(function () {
+        // Autoplay refused — iOS Low Power Mode does this unconditionally.
+        // Show the copy over the still, and take the first tap as permission.
+        reveal();
+        ["pointerdown", "touchstart", "keydown"].forEach(function (e) {
+          window.addEventListener(e, retry, { once: true, passive: true });
+        });
+      });
+    }
   }
+  function retry() { if (video.paused && !video.ended) { video.play().catch(function () {}); } }
+
+  attempt();
 })();
 </script>
 </body>
