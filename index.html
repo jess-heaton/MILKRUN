@@ -121,6 +121,15 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 .btn--ghost { border-color: rgba(242,239,233,0.4); color: var(--paper); }
 .btn--ghost:hover { border-color: var(--paper); background: var(--paper); color: var(--ink); }
 
+/* Drawn, not an emoji — inherits the label's colour and nudges on hover. */
+.btn__arrow {
+  width: 11px; height: 11px; flex: 0 0 auto;
+  fill: none; stroke: currentColor; stroke-width: 1.7;
+  stroke-linecap: round; stroke-linejoin: round;
+  transition: transform .18s ease;
+}
+.btn:hover .btn__arrow { transform: translate(2px, -2px); }
+
 /* ============================================================
    HEADER
    ============================================================ */
@@ -142,7 +151,8 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 .nav         { order: 3; }
 .mark { display: flex; align-items: center; gap: 9px; flex: 0 0 auto; }
 .mark__dot { width: 19px; height: 19px; border-radius: 50%; border: 5px solid var(--signal); }
-.mark__word { font-size: 21px; font-weight: 900; letter-spacing: -0.045em; }
+.mark__word { font-size: 21px; font-weight: 900; letter-spacing: -0.045em; transition: color .18s ease; }
+a.mark:hover .mark__word { color: var(--signal); }
 
 .header__cta { padding: 11px 18px; font-size: 11px; }
 
@@ -247,7 +257,6 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 .manifest__item p { margin: 0; max-width: 34ch; font-size: 16px; line-height: 1.55; color: var(--muted-light); }
 
 .manifest__close { margin: 34px 0 0; font-size: clamp(21px, 5.6vw, 32px); font-weight: 900; letter-spacing: -0.035em; }
-.manifest__note { margin: 16px 0 0; max-width: 60ch; font: 400 10.5px/1.7 var(--mono); letter-spacing: 0.05em; color: rgba(242,239,233,0.42); }
 
 /* ============================================================
    PANEL 3 — HOW IT WORKS  (a run of four, on a line)
@@ -271,13 +280,10 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 .run__step h3 { font-size: clamp(19px, 4.6vw, 23px); letter-spacing: -0.03em; line-height: 1.15; padding-top: 7px; }
 .run__step p { margin: 9px 0 0; max-width: 34ch; font-size: 16px; line-height: 1.6; color: var(--muted); }
 
-.run__close {
-  margin: 40px 0 0; padding-top: 24px; border-top: 1px solid var(--rule);
-  max-width: 64ch; font-size: clamp(16px, 3.9vw, 18px); line-height: 1.55; font-weight: 600; letter-spacing: -0.01em;
+.run__note {
+  margin: 40px 0 0; padding-top: 22px; border-top: 1px solid var(--rule);
+  max-width: 60ch; font: 400 10.5px/1.7 var(--mono); letter-spacing: 0.06em; color: rgba(20,21,15,0.5);
 }
-/* Two separate statements, so they get separate lines rather than running on. */
-.run__close span { display: block; }
-.run__note { margin: 18px 0 0; max-width: 60ch; font: 400 10.5px/1.7 var(--mono); letter-spacing: 0.06em; color: rgba(20,21,15,0.5); }
 
 /* ============================================================
    PANEL 4 — COMMUNITY  (a role, written out as duties)
@@ -312,13 +318,8 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 .stat__num { font-size: clamp(58px, 17vw, 108px); font-weight: 900; letter-spacing: -0.055em; line-height: 0.86; }
 .stat__cap { margin: 14px 0 0; max-width: 28ch; font-size: clamp(16px, 4vw, 19px); font-weight: 700; letter-spacing: -0.015em; line-height: 1.35; }
 
-.proofs { display: grid; gap: 26px; margin-top: 34px; }
-.proof { border-top: 2px solid var(--signal); padding-top: 16px; }
-.proof h3 { font-size: clamp(17px, 4.2vw, 20px); letter-spacing: -0.025em; line-height: 1.2; }
-.proof p { margin: 8px 0 0; font-size: 15.5px; line-height: 1.6; color: var(--muted-light); }
 
-.precedent__body { margin: 34px 0 0; max-width: 62ch; }
-.precedent__actions { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; margin-top: 30px; }
+.precedent__actions { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; margin-top: 40px; }
 .precedent__note { font: 400 10.5px/1.6 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: rgba(242,239,233,0.5); }
 .precedent__src { margin: 22px 0 0; max-width: 68ch; font: 400 10px/1.7 var(--mono); letter-spacing: 0.04em; color: rgba(242,239,233,0.42); }
 
@@ -350,10 +351,6 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 .footer__links { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 4px 20px; font: 400 12px/1 var(--mono); letter-spacing: 0.08em; }
 .footer__links a { padding: 7px 0; }
 .footer__links a:hover { color: var(--signal); }
-.footer__base {
-  margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--rule-light);
-  font: 400 11px/1.6 var(--mono); letter-spacing: 0.08em; color: rgba(242,239,233,0.45);
-}
 
 /* ============================================================
    ≥ 720px — tablet
@@ -381,13 +378,12 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
   .run__step:last-child { padding-bottom: 0; }
   .run__num { top: 0; }
   .run__step h3 { padding-top: 0; }
-  .run__close { margin-top: 48px; }
+  .run__note { margin-top: 48px; }
 
   .stats { grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--rule-light); border-bottom: 1px solid var(--rule-light); }
   .stat { background: var(--ink); padding: 32px 28px; border-bottom: 0; }
   .stat:first-child { padding-left: 0; }
   .stat:last-child { padding-right: 0; }
-  .proofs { grid-template-columns: repeat(2, 1fr); gap: 36px; }
 
   .precedent__actions { flex-direction: row; align-items: center; gap: 26px; }
 
@@ -473,7 +469,7 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
          preload="none" poster="hero-poster.jpg" aria-hidden="true" tabindex="-1"></video>
   <div class="hero__scrim"></div>
   <div class="hero__scrim2"></div>
-  <p class="hero__tag">Concept visualisation</p>
+  <p class="hero__tag">Concept visualization</p>
 
   <div class="hero__body">
     <p class="hero__eyebrow reveal">Healthcare logistics · British Columbia</p>
@@ -493,10 +489,10 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
     <h2 class="h-lg problem__head">The doctor comes to you.<span class="accent">Your medicine should too.</span></h2>
     <div class="problem__aside">
       <div class="problem__body">
-        <p class="body">A prescription can be written in the community.</p>
-        <p class="body">Getting it filled can still mean hours on the road &mdash; or finding someone else to make the trip.</p>
+        <p class="body">A prescription can be written locally.</p>
+        <p class="body">Getting it filled can mean hours on the road &mdash; or finding someone else to make the trip.</p>
       </div>
-      <p class="problem__close"><b>MILKRUN</b> brings the medication instead.</p>
+      <p class="problem__close"><b>MILKRUN</b> flies straight to your community.</p>
     </div>
   </div>
 </section>
@@ -505,7 +501,7 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
 <section class="panel panel--ink" id="payload">
   <div class="wrap">
     <p class="label">The payload</p>
-    <h2 class="h-lg" style="max-width:15ch">Small things worth a long drive.</h2>
+    <h2 class="h-lg" style="max-width:15ch">Small packages. Hard-to-reach places.</h2>
 
     <div class="manifest">
       <div class="manifest__item">
@@ -559,7 +555,6 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
       </div>
     </div>
 
-    <p class="run__close"><span>MILKRUN moves sealed packages.</span> <span>Clinicians and pharmacists keep the clinical decisions.</span></p>
     <p class="run__note">Pilot flights subject to route-specific aviation, healthcare and community approvals.</p>
   </div>
 </section>
@@ -603,20 +598,9 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
       </div>
     </div>
 
-    <div class="proofs">
-      <div class="proof">
-        <h3>Real medications transported.</h3>
-        <p>Transport Canada approval enabled medication transport.</p>
-      </div>
-      <div class="proof">
-        <h3>BVLOS approved.</h3>
-        <p>Beyond-visual-line-of-sight operations approved by Transport Canada.</p>
-      </div>
-    </div>
-
     <div class="precedent__actions">
-      <a class="btn btn--signal" href="https://dronetransport.med.ubc.ca/about-2/" target="_blank" rel="noopener noreferrer">Explore the project</a>
-      <span class="precedent__note">Independent precedent · MILKRUN is not affiliated with UBC</span>
+      <a class="btn btn--signal" href="https://dronetransport.med.ubc.ca/about-2/" target="_blank" rel="noopener noreferrer">Explore the project<svg class="btn__arrow" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.2 8.8 8.8 3.2M4.4 3.2h4.4v4.4"/></svg></a>
+      <span class="precedent__note">MILKRUN is not affiliated with UBC</span>
     </div>
     <p class="precedent__src">Phase I, Stellat&rsquo;en First Nation and the Village of Fraser Lake, October 2021 &ndash; October 2022. Survey figure from 31 community respondents.</p>
   </div>
@@ -641,7 +625,7 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
       <div class="partner__actions">
         <a class="btn btn--ink" href="mailto:jessica@milkrun.ca">Get in touch</a>
       </div>
-      <p class="partner__note">Pilot-stage project · British Columbia, Canada</p>
+      <p class="partner__note">British Columbia, Canada</p>
     </div>
   </div>
 </section>
@@ -670,7 +654,6 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.04em; line-height: 
         <a href="#partner">Partner</a>
       </nav>
     </div>
-    <div class="footer__base">© 2026 MILKRUN</div>
   </div>
 </footer>
 
