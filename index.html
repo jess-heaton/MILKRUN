@@ -190,8 +190,8 @@ a.mark:hover .mark__word { color: var(--signal); }
   object-fit: cover;
   transition: transform 3.4s cubic-bezier(.25,.5,.2,1);
 }
-/* Once the copy lands the held frame drifts up and in, so the aircraft —
-   centred in frame — clears the bottom-anchored headline. */
+/* As the copy lands the frame drifts up and in, so the aircraft — centred in
+   the shot — sits clear of the bottom-anchored headline for the whole loop. */
 .hero.is-revealed .hero__video { transform: scale(1.16) translateY(-8%); }
 
 .hero__scrim, .hero__scrim2 { position: absolute; inset: 0; pointer-events: none; }
@@ -465,7 +465,7 @@ a.mark:hover .mark__word { color: var(--signal); }
        unreliable, and a phone that matches neither source loads nothing at all
        — the script picks the file and sets .src directly instead. preload="none"
        stops the browser fetching before that choice is made. -->
-  <video class="hero__video" id="hero-video" autoplay muted playsinline webkit-playsinline
+  <video class="hero__video" id="hero-video" autoplay muted loop playsinline webkit-playsinline
          preload="none" poster="hero-poster.jpg" aria-hidden="true" tabindex="-1"></video>
   <div class="hero__scrim"></div>
   <div class="hero__scrim2"></div>
@@ -501,7 +501,7 @@ a.mark:hover .mark__word { color: var(--signal); }
 <section class="panel panel--ink" id="payload">
   <div class="wrap">
     <p class="label">The payload</p>
-    <h2 class="h-lg" style="max-width:15ch">Small packages. Hard-to-reach places.</h2>
+    <h2 class="h-lg" style="max-width:15ch">Small packages. Long distances.</h2>
 
     <div class="manifest">
       <div class="manifest__item">
@@ -663,16 +663,19 @@ a.mark:hover .mark__word { color: var(--signal); }
   var video = document.getElementById("hero-video");
   if (!hero) return;
 
-  var revealed = false, startGuard, endGuard;
+  var revealed = false, revealTimer;
 
   function reveal() {
     if (revealed) return;
     revealed = true;
-    clearTimeout(startGuard); clearTimeout(endGuard);
+    clearTimeout(revealTimer);
     hero.classList.add("is-revealed");
   }
 
-  // Whatever the video does, the copy is never more than a gesture away.
+  // The film loops, so there is no "ended" to hang the copy off. It comes in on
+  // a short timer instead — a visitor who never scrolls still gets the headline
+  // a beat after landing — and any gesture brings it forward immediately.
+  revealTimer = setTimeout(reveal, 1000);
   ["scroll", "wheel", "touchstart", "pointerdown", "keydown"].forEach(function (e) {
     window.addEventListener(e, reveal, { once: true, passive: true });
   });
@@ -700,17 +703,6 @@ a.mark:hover .mark__word { color: var(--signal); }
   video.preload = "auto";
   video.load();
 
-  // If playback has not begun promptly, stop withholding the headline.
-  startGuard = setTimeout(reveal, 2800);
-
-  video.addEventListener("playing", function () {
-    clearTimeout(startGuard);
-    var left = (isFinite(video.duration) ? Math.max(0, video.duration - video.currentTime) : 10) * 1000;
-    clearTimeout(endGuard);
-    endGuard = setTimeout(reveal, left + 1500);   // backstop if "ended" never fires
-  });
-
-  video.addEventListener("ended", reveal);
   video.addEventListener("error", reveal);
 
   function attempt() {
@@ -726,7 +718,7 @@ a.mark:hover .mark__word { color: var(--signal); }
       });
     }
   }
-  function retry() { if (video.paused && !video.ended) { video.play().catch(function () {}); } }
+  function retry() { if (video.paused) { video.play().catch(function () {}); } }
 
   attempt();
 })();
